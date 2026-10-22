@@ -1,7 +1,7 @@
 package modelo;
 
 public class ClaseGym {
-    private int id;
+    private int id = -1 ;
     private String diciplina;
     private Entrenador entrenador;
     private String horario;
@@ -12,7 +12,6 @@ public class ClaseGym {
     }
 
     public ClaseGym(String diciplina, Entrenador entrenador, String horario, int capacidad, boolean estado) {
-        this.id = -1;
         this.diciplina = diciplina;
         this.entrenador = entrenador;
         this.horario = horario;

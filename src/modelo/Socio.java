@@ -6,7 +6,7 @@ package modelo;
 
 
 public class Socio {
-    private int idSocio;
+    private int idSocio = -1;
     private String dni;
     private String nombre;
     private String apellido;

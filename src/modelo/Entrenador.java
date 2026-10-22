@@ -6,7 +6,7 @@ package modelo;
 
 
 public class Entrenador {
-    private int idEntrenador;
+    private int idEntrenador = -1;
     private String dni;
     private String nombre;
     private String apellido;
