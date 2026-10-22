@@ -39,30 +39,35 @@ public class ClaseGymData {
         }
     }
     
-    public ClaseGym buscarClase(int id){
-        String sql = "SELECT id_clse, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE ID_Socio = ? AND Estado = 1";
-        ClaseGym c = null;
-        EntrenadorData ed = new EntrenadorData();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                c = new ClaseGym();
-                c.setId(id);
-                c.setDiciplina(rs.getString(2));
-                c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt(3)));
-                c.setHorario(rs.getString(4));
-                c.setCapacidad(rs.getInt(5));
-                c.setEstado(rs.getBoolean(6));
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe un socio con ese ID.");
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+   public ClaseGym buscarClase(int id) {
+    // 1. Corregimos la consulta: filtramos por ID_Clase (no ID_Socio)
+    String sql = "SELECT id_clase, disciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
+    ClaseGym c = null;
+    EntrenadorData ed = new EntrenadorData();
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            c = new ClaseGym();
+            // 2. Usamos los nombres de columnas de la BD (más seguro que usar números)
+            c.setId(rs.getInt("id_clase"));
+            c.setDiciplina(rs.getString("disciplina"));
+            c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt("id_entrenador")));
+            c.setHorario(rs.getString("horario")); // O rs.getTime("horario") si usas Time/LocalTime
+            c.setCapacidad(rs.getInt("capacidad"));
+            c.setEstado(rs.getBoolean("estado"));
+        } else {
+            // 3. Corregimos el mensaje para que sea coherente con la clase
+            JOptionPane.showMessageDialog(null, "No existe una clase con ese ID.");
         }
-        return c;
+        ps.close();
+    } catch (SQLException ex) {
+        // 4. Corregimos el mensaje de error
+        JOptionPane.showMessageDialog(null, "Error al buscar la clase: " + ex.getMessage());
     }
+    return c;
+}
 }
