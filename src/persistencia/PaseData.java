@@ -79,4 +79,23 @@ public class PaseData {
         }
         return pase;
     }
+    
+    public void actualizarClase(Pase p){
+        String sql = "UPDATE pase SET id_socio = ?, cantidad_entradas = ?, fecha_inicio = ?, fecha_fin = ?, costo = ?, estado=? WHERE id_pase = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+            ps.setInt(1, p.getSocio().getIdSocio());
+            ps.setInt(2, p.getCant_entradas());
+            ps.setString(3, p.getFecha_inicio().toString());
+            ps.setString(4, p.getFecha_fin().toString());
+            ps.setFloat(5, p.getCosto());
+            ps.setBoolean(6, p.isEstado());
+            ps.setInt(7, p.getId());
+            
+            ps.executeUpdate(sql);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al actualizar el pase: " + ex.getMessage());
+        }
+    }
 }
