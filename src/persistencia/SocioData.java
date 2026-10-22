@@ -16,7 +16,7 @@ public class SocioData {
 
     public SocioData() {
         MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
-con = conexion.buscarConexion();
+        con = conexion.buscarConexion();
     }
 
     public void guardarSocio(Socio socio) {
