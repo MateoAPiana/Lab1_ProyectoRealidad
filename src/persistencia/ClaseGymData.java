@@ -93,4 +93,14 @@ public class ClaseGymData {
             JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
         }
     }
+    
+    public void darDeBajaClase(ClaseGym c){
+        c.setEstado(false);
+        actualizarClase(c);
+    }
+    
+    public void darDeAltaClase(ClaseGym c){
+        c.setEstado(true);
+        actualizarClase(c);
+    }
 }
