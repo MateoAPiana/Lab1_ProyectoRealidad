@@ -16,7 +16,7 @@ public class AsistenciaData {
     private ClaseGymData clasegymData;
 
     public AsistenciaData() {
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
+        MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
         socioData = new SocioData();
         clasegymData = new ClaseGymData();
