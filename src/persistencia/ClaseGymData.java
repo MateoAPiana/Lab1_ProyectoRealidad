@@ -12,7 +12,7 @@ public class ClaseGymData {
     private Connection con = null;
     
     public void ClaseGymData(){
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
         con = conexion.buscarConexion();
     }
     
@@ -68,7 +68,9 @@ public class ClaseGymData {
         // 4. Corregimos el mensaje de error
         JOptionPane.showMessageDialog(null, "Error al buscar la clase: " + ex.getMessage());
     }
-    
+   
+    return c;
+   }
     public void actualizarClase(ClaseGym c){
         String sql = "UPDATE clasegym SET id_entrenador = ?, diciplina = ?, horario = ?, capacidad = ?, estado = ? WHERE id_clase = ?";
         try{
