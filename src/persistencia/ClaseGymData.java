@@ -57,12 +57,40 @@ public class ClaseGymData {
                 c.setCapacidad(rs.getInt(5));
                 c.setEstado(rs.getBoolean(6));
             } else {
-                JOptionPane.showMessageDialog(null, "No existe un socio con ese ID.");
+                JOptionPane.showMessageDialog(null, "No existe una clase con ese ID.");
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al buscar la clase: " + ex.getMessage());
         }
         return c;
+    }
+    
+    public void actualizarClase(ClaseGym c){
+        String sql = "UPDATE clasegym SET id_entrenador = ?, diciplina = ?, horario = ?, capacidad = ?, estado = ? WHERE id_clase = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, c.getEntrenador().getIdEntrenador());
+            ps.setString(2, c.getDiciplina());
+            ps.setString(3, c.getHorario());
+            ps.setInt(4, c.getCapacidad());
+            ps.setBoolean(5, c.isEstado());
+            ps.setInt(7, c.getId());
+            
+            ps.executeUpdate(sql);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
+        }
+    }
+    
+    public void borrarClase(int id){
+        String sql = "DELETE FROM clasegym WHERE id = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ps.executeUpdate(sql);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
+        }
     }
 }
