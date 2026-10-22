@@ -61,6 +61,9 @@ public class Asistencia {
         this.fechaAsistencia = fechaAsistencia;
     }
 
- 
+ @Override
+    public String toString() {
+        return "Asistencia [ID=" + idAsistencia + ", Socio=" + socio.getApellido() + ", Clase=" + clase.getDiciplina() + ", Fecha=" + fechaAsistencia + "]";
+    }
     
 }
