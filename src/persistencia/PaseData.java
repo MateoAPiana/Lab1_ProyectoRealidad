@@ -80,7 +80,7 @@ public class PaseData {
         return pase;
     }
     
-    public void actualizarClase(Pase p){
+    public void actualizarPase(Pase p){
         String sql = "UPDATE pase SET id_socio = ?, cantidad_entradas = ?, fecha_inicio = ?, fecha_fin = ?, costo = ?, estado=? WHERE id_pase = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -97,5 +97,26 @@ public class PaseData {
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al actualizar el pase: " + ex.getMessage());
         }
+    }
+    
+    public void borrarPase(int id){
+        String sql = "DELETE FROM pase WHERE id = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ps.executeUpdate(sql);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al borrar el pase: " + ex.getMessage());
+        }
+    }
+    
+    public void darDeBajaPase(Pase c){
+        c.setEstado(false);
+        actualizarPase(c);
+    }
+    
+    public void darDeAltaPase(Pase c){
+        c.setEstado(true);
+        actualizarPase(c);
     }
 }

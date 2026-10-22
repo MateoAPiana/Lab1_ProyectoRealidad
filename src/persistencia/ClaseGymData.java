@@ -90,7 +90,7 @@ public class ClaseGymData {
             ps.setInt(1, id);
             ps.executeUpdate(sql);
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al borrar la clase: " + ex.getMessage());
         }
     }
     
