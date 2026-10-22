@@ -20,7 +20,7 @@ public class SocioData {
     }
 
     public void guardarSocio(Socio socio) {
-        String sql = "INSERT INTO socios (DNI, Nombre, Apellido, Edad, Correo, Telefono, Estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO socio (DNI, Nombre, Apellido, Edad, Correo, Telefono, Estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, socio.getDni());

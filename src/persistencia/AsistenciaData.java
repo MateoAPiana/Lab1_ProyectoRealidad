@@ -22,7 +22,7 @@ public class AsistenciaData {
         socioData = new SocioData();
         clasegymData = new ClaseGymData();
     }
-
+// 1. REGISTRAR (ALTA)
     public void registrarAsistencia(Asistencia asistencia) {
         String sql = "INSERT INTO Asistencias (ID_Socio, ID_Clase, Fecha_Asistencia) VALUES (?, ?, ?)";
         try {
@@ -43,4 +43,80 @@ public class AsistenciaData {
             JOptionPane.showMessageDialog(null, "Error al registrar la asistencia: " + ex.getMessage());
         }
     }
-}
+
+    // 2. BUSCAR POR ID
+    public Asistencia buscarAsistenciaPorId(int id) {
+        String sql = "SELECT ID_Socio, ID_Clase, Fecha_Asistencia FROM Asistencias WHERE ID_Asistencia = ?";
+        Asistencia asistencia = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                asistencia = new Asistencia();
+                asistencia.setIdAsistencia(id);
+                
+                int idSocio = rs.getInt("ID_Socio");
+                int idClase = rs.getInt("ID_Clase");
+                
+                Socio socio = socioData.buscarSocioPorId(idSocio);
+
+// 1. Instancias la clase Data correspondiente
+ClaseGymData claseData = new ClaseGymData();
+
+// 2. Llamas al método usando la instancia (minúscula o el nombre de tu objeto)
+ClaseGym clase = claseData.buscarClase(idClase);
+
+                asistencia.setSocio(socio);
+                asistencia.setClase(clase);
+                
+                Date sqlDate = rs.getDate("Fecha_Asistencia");
+                if (sqlDate != null) {
+                    asistencia.setFechaAsistencia(sqlDate.toLocalDate());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un registro de asistencia con ese ID.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar la asistencia: " + ex.getMessage());
+        }
+        return asistencia;
+    }
+
+    // 3. ACTUALIZAR
+    public void actualizarAsistencia(Asistencia asistencia) {
+        String sql = "UPDATE Asistencias SET ID_Socio = ?, ID_Clase = ?, Fecha_Asistencia = ? WHERE ID_Asistencia = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, asistencia.getSocio().getIdSocio());
+            ps.setInt(2, asistencia.getClase().getId());
+            ps.setDate(3, Date.valueOf(asistencia.getFechaAsistencia()));
+            ps.setInt(4, asistencia.getIdAsistencia());
+            
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "¡Asistencia actualizada con éxito!");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar la asistencia: " + ex.getMessage());
+        }
+    }
+
+    public void borrarAsistencia(int id) {
+        String sql = "DELETE FROM Asistencias WHERE ID_Asistencia = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "¡Asistencia eliminada con éxito!");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al borrar la asistencia: " + ex.getMessage());
+        }
+    }}
