@@ -1,18 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
-
 public class Socio {
+
     private int idSocio = -1;
+
     private String dni;
+
     private String nombre;
+
     private String apellido;
+
     private int edad;
+
     private String correo;
+
     private String telefono;
+
     private boolean estado;
 
     public Socio() {

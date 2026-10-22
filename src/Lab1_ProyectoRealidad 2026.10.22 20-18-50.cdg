@@ -350,7 +350,34 @@
         <Method name="buscarConexion" returnType="Connection" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="SocioData" package="persistencia" visibility="public" xPosition="320.0" yPosition="420.0">
+    <Class name="PaseData" package="persistencia" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="PaseData" returnType="void" visibility="public"/>
+        <Method name="guardarPase" returnType="void" visibility="public">
+          <Argument type="Pase" name="pase"/>
+        </Method>
+        <Method name="buscarPase" returnType="Pase" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarPase" returnType="void" visibility="public">
+          <Argument type="Pase" name="p"/>
+        </Method>
+        <Method name="borrarPase" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darDeBajaPase" returnType="void" visibility="public">
+          <Argument type="Pase" name="c"/>
+        </Method>
+        <Method name="darDeAltaPase" returnType="void" visibility="public">
+          <Argument type="Pase" name="c"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SocioData" package="persistencia" visibility="public" xPosition="620.0" yPosition="420.0">
       <Fields>
         <Field name="con" type="Connection" visibility="private"/>
       </Fields>
@@ -369,7 +396,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Prueba" package="vistas" visibility="public" xPosition="620.0" yPosition="420.0">
+    <Class name="Prueba" package="vistas" visibility="public" xPosition="920.0" yPosition="420.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -380,19 +407,20 @@
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
+    <HasRelation name="clasegymData" source="persistencia.AsistenciaData" target="persistencia.ClaseGymData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="persistencia.AsistenciaData" target="modelo.Asistencia" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="persistencia.SocioData" target="modelo.Socio" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="persistencia.EntrenadorData" target="modelo.Entrenador" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="socioData" source="persistencia.AsistenciaData" target="persistencia.SocioData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="socio" source="modelo.Asistencia" target="modelo.Socio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="modelo.Asistencia" target="modelo.Socio" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="modelo.Asistencia" target="modelo.ClaseGym" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="socio" source="modelo.Pase" target="modelo.Socio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="modelo.Pase" target="modelo.Socio" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="modelo.ClaseGym" target="modelo.Entrenador" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="clase" source="modelo.Asistencia" target="modelo.ClaseGym" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="persistencia.PaseData" target="modelo.Pase" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="entrenador" source="modelo.ClaseGym" target="modelo.Entrenador" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="persistencia.ClaseGymData" target="modelo.ClaseGym" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="clasegymData" source="persistencia.AsistenciaData" target="persistencia.ClaseGymData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="socioData" source="persistencia.AsistenciaData" target="persistencia.SocioData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="modelo.Pase" target="modelo.Socio" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="clase" source="modelo.Asistencia" target="modelo.ClaseGym" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="modelo.Asistencia" target="modelo.Socio" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="persistencia.EntrenadorData" target="modelo.Entrenador" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

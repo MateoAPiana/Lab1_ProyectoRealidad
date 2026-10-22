@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persistencia;
-
 
 import modelo.Socio;
 import java.sql.*;
@@ -12,6 +7,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class SocioData {
+
     private Connection con = null;
 
     public SocioData() {
@@ -30,9 +26,7 @@ public class SocioData {
             ps.setString(5, socio.getCorreo());
             ps.setString(6, socio.getTelefono());
             ps.setBoolean(7, socio.isEstado());
-            
             ps.executeUpdate();
-            
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 socio.setIdSocio(rs.getInt(1));
@@ -51,7 +45,6 @@ public class SocioData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
             if (rs.next()) {
                 socio = new Socio();
                 socio.setIdSocio(id);

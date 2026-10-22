@@ -1,11 +1,17 @@
 package modelo;
 
 public class ClaseGym {
-    private int id = -1 ;
+
+    private int id = -1;
+
     private String diciplina;
+
     private Entrenador entrenador;
+
     private String horario;
+
     private int capacidad;
+
     private boolean estado;
 
     public ClaseGym() {
@@ -66,6 +72,4 @@ public class ClaseGym {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persistencia;
 
 import modelo.Entrenador;
@@ -9,6 +5,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class EntrenadorData {
+
     private Connection con = null;
 
     public EntrenadorData() {
@@ -25,9 +22,7 @@ public class EntrenadorData {
             ps.setString(3, entrenador.getApellido());
             ps.setString(4, entrenador.getEspecialidad());
             ps.setBoolean(5, entrenador.isEstado());
-            
             ps.executeUpdate();
-            
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 entrenador.setIdEntrenador(rs.getInt(1));
@@ -46,7 +41,6 @@ public class EntrenadorData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
             if (rs.next()) {
                 entrenador = new Entrenador();
                 entrenador.setIdEntrenador(id);

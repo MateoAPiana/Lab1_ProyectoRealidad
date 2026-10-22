@@ -3,12 +3,19 @@ package modelo;
 import java.time.LocalDate;
 
 public class Pase {
-    private int id= -1;
+
+    private int id = -1;
+
     private Socio socio;
+
     private int cant_entradas;
+
     private LocalDate fecha_inicio;
+
     private LocalDate fecha_fin;
+
     private float costo;
+
     private boolean estado;
 
     public Pase() {
@@ -78,6 +85,4 @@ public class Pase {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
 }

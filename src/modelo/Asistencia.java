@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
-
 
 import java.time.LocalDate;
 
 public class Asistencia {
-    private int idAsistencia=-1;
+
+    private int idAsistencia = -1;
+
     private Socio socio;
+
     private ClaseGym clase;
+
     private LocalDate fechaAsistencia;
 
     public Asistencia() {
@@ -61,9 +60,8 @@ public class Asistencia {
         this.fechaAsistencia = fechaAsistencia;
     }
 
- @Override
+    @Override
     public String toString() {
         return "Asistencia [ID=" + idAsistencia + ", Socio=" + socio.getApellido() + ", Clase=" + clase.getDiciplina() + ", Fecha=" + fechaAsistencia + "]";
     }
-    
 }
