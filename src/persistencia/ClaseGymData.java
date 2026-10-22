@@ -38,4 +38,31 @@ public class ClaseGymData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Socios: " + ex.getMessage());
         }
     }
+    
+    public ClaseGym buscarClase(int id){
+        String sql = "SELECT id_clse, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE ID_Socio = ? AND Estado = 1";
+        ClaseGym c = null;
+        EntrenadorData ed = new EntrenadorData();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                c = new ClaseGym();
+                c.setId(id);
+                c.setDiciplina(rs.getString(2));
+                c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt(3)));
+                c.setHorario(rs.getString(4));
+                c.setCapacidad(rs.getInt(5));
+                c.setEstado(rs.getBoolean(6));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un socio con ese ID.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+        }
+        return c;
+    }
 }
