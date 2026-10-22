@@ -17,7 +17,7 @@ public class Prueba {
         // 2. Probar la Conexión a la Base de Datos usando una instancia
         System.out.println("Probando conexión a la base de datos 'aborigym'...");
         
-        MiConexion miconexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
+        MiConexion miconexion = new MiConexion();
         Connection con = miconexion.buscarConexion();
         
         if (con != null) {

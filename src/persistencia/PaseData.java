@@ -13,7 +13,7 @@ public class PaseData {
     private Connection con = null;
     
     public void PaseData(){
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
+        MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
     }
     

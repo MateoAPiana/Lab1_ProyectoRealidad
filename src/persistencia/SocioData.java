@@ -15,7 +15,7 @@ public class SocioData {
     private Connection con = null;
 
     public SocioData() {
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");
+        MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
     }
 
