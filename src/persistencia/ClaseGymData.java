@@ -66,7 +66,7 @@ public class ClaseGymData {
     }
 
     public void actualizarClase(ClaseGym c) {
-        String sql = "UPDATE clasegym SET id_entrenador = ?, diciplina = ?, horario = ?, capacidad = ?, estado = ? WHERE id_clase = ?";
+        String sql = "UPDATE clasegym SET id_entrenador = ? , diciplina = ? , horario = ? , capacidad = ? , estado = ? WHERE id_clase = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, c.getEntrenador().getIdEntrenador());
@@ -74,8 +74,8 @@ public class ClaseGymData {
             ps.setString(3, c.getHorario());
             ps.setInt(4, c.getCapacidad());
             ps.setBoolean(5, c.isEstado());
-            ps.setInt(7, c.getId());
-            ps.executeUpdate(sql);
+            ps.setInt(6, c.getId());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
         }

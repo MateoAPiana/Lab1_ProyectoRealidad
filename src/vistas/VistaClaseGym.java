@@ -96,6 +96,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -239,6 +240,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         c.setHorario(txtHorario.getText());
         c.setEstado(chkEstado.isSelected());
         ec.guardarClase(c);
+        btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisciplinaActionPerformed
@@ -256,6 +258,20 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         txtHorario.setText("");
         chkEstado.setSelected(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        ClaseGym c = new ClaseGym();
+        c.setId(Integer.parseInt(txtIdClase.getText()));
+        c.setDiciplina(txtDisciplina.getText());
+        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+        c.setEntrenador(e);
+        c.setHorario(txtHorario.getText());
+        c.setEstado(chkEstado.isSelected());
+        ec.actualizarClase(c);
+        btnLimpiarActionPerformed(evt);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
