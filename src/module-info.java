@@ -7,4 +7,6 @@ module Lab1_ProyectoRealidad {
     requires mysql.connector.java;
     requires java.sql;
     requires java.desktop;
+    requires java.logging;
+    exports Vistas;
 }
