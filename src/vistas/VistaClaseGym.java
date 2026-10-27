@@ -122,6 +122,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         cboEntrenador.addActionListener(this::cboEntrenadorActionPerformed);
 
@@ -235,6 +236,14 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private void cboEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEntrenadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboEntrenadorActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtIdClase.setText("");
+        txtCapacidad.setText("");
+        txtDisciplina.setText("");
+        txtHorario.setText("");
+        chkEstado.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
