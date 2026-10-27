@@ -3,13 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
-
+import modelo.Entrenador;
+import persistencia.EntrenadorData;
+import javax.swing.JOptionPane;
 /**
  *
  * @author verit
  */
 public class VistaEntrenador extends javax.swing.JInternalFrame {
+    private EntrenadorData entData = new EntrenadorData();
+    private Entrenador entrenadorActual = null;
     
+    private void limpiarCampos() {
+    txtIdEntrenador.setText("");
+    txtDni.setText("");
+    txtNombre.setText("");
+    txtApellido.setText("");
+    txtEspecialidad.setText("");
+    chkEstado.setSelected(false);
+    entrenadorActual = null;
+    }
+
+
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaEntrenador.class.getName());
 
     /**
@@ -47,7 +63,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         chkEstado = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -56,12 +72,15 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         txtIdEntrenador.setPreferredSize(new java.awt.Dimension(120, 22));
+        txtIdEntrenador.addActionListener(this::txtIdEntrenadorActionPerformed);
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         txtDni.setPreferredSize(new java.awt.Dimension(120, 22));
         txtDni.addActionListener(this::txtDniActionPerformed);
@@ -69,12 +88,14 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         txtNombre.setPreferredSize(new java.awt.Dimension(120, 22));
 
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtApellido.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -204,11 +225,139 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
 
     private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
         // TODO add your handling code here:
+        if (entrenadorActual != null) {
+        try {
+            String dni = txtDni.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String especialidad = txtEspecialidad.getText();
+            boolean estado = chkEstado.isSelected();
+
+            if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.");
+                return;
+            }
+
+            entrenadorActual.setDni(dni);
+            entrenadorActual.setNombre(nombre);
+            entrenadorActual.setApellido(apellido);
+            entrenadorActual.setEspecialidad(especialidad);
+            entrenadorActual.setEstado(estado);
+
+            entData.modificarEntrenador(entrenadorActual);
+            limpiarCampos();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar entrenador: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Primero debe buscar un entrenador mediante su ID para poder modificarlo.");
+    }
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+
+
+        try {
+        String dni = txtDni.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String especialidad = txtEspecialidad.getText();
+        boolean estado = chkEstado.isSelected();
+
+        if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios (DNI, Nombre, Apellido).");
+            return;
+        }
+
+        Entrenador entrenador = new Entrenador();
+        entrenador.setDni(dni);
+        entrenador.setNombre(nombre);
+        entrenador.setApellido(apellido);
+        entrenador.setEspecialidad(especialidad);
+        entrenador.setEstado(estado);
+
+        entData.guardarEntrenador(entrenador);
+        limpiarCampos();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage());
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtIdEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdEntrenadorActionPerformed
+        // TODO add your handling code here:
+        try {
+        int id = Integer.parseInt(txtIdEntrenador.getText());
+        entrenadorActual = entData.buscarEntrenadorPorId(id); 
+
+        if (entrenadorActual != null) {
+            txtDni.setText(entrenadorActual.getDni());
+            txtNombre.setText(entrenadorActual.getNombre());
+            txtApellido.setText(entrenadorActual.getApellido());
+            txtEspecialidad.setText(entrenadorActual.getEspecialidad());
+            chkEstado.setSelected(entrenadorActual.isEstado());
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un ID numerico valido para buscar.");
+    }
+    }//GEN-LAST:event_txtIdEntrenadorActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if (entrenadorActual != null) {
+        try {
+            String dni = txtDni.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String especialidad = txtEspecialidad.getText();
+            boolean estado = chkEstado.isSelected();
+
+            if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.");
+                return;
+            }
+
+            entrenadorActual.setDni(dni);
+            entrenadorActual.setNombre(nombre);
+            entrenadorActual.setApellido(apellido);
+            entrenadorActual.setEspecialidad(especialidad);
+            entrenadorActual.setEstado(estado);
+
+            entData.modificarEntrenador(entrenadorActual);
+            limpiarCampos();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar entrenador: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Primero debe buscar un entrenador mediante su ID para poder modificarlo.");
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (entrenadorActual != null) {
+        try {
+            entData.eliminarEntrenador(entrenadorActual.getIdEntrenador());
+            limpiarCampos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Primero debe buscar un entrenador mediante su ID para poder eliminarlo.");
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
