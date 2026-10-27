@@ -5,7 +5,9 @@
 package vistas;
 
 import java.util.List;
+import modelo.ClaseGym;
 import modelo.Entrenador;
+import persistencia.ClaseGymData;
 import persistencia.EntrenadorData;
 /**
  *
@@ -16,6 +18,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaClaseGym.class.getName());
 
     private EntrenadorData ed = null;
+    private ClaseGymData ec = null;
     
     /**
      * Creates new form VistaClaseGym
@@ -23,6 +26,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     public VistaClaseGym() {
         initComponents();
         ed = new EntrenadorData();
+        ec = new ClaseGymData();
         cargarEntrenadores();
     }
     
@@ -30,7 +34,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         List<Entrenador> lista = ed.listarEntrenador();
         
         for (Entrenador e : lista){
-            cboEntrenador.addItem(e.getNombre()+ " " + e.getApellido());
+            cboEntrenador.addItem(e.getIdEntrenador() + " - " + e.getNombre()+ " " + e.getApellido());
         }
     }
 
@@ -226,7 +230,15 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        ClaseGym c = new ClaseGym();
+        c.setDiciplina(txtDisciplina.getText());
+        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+        c.setEntrenador(e);
+        c.setHorario(txtHorario.getText());
+        c.setEstado(chkEstado.isSelected());
+        ec.guardarClase(c);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisciplinaActionPerformed

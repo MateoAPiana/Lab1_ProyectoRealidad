@@ -11,10 +11,11 @@ import modelo.ClaseGym;
 public class ClaseGymData {
 
     private Connection con = null;
-    
-    public void ClaseGymData(){
+
+    public ClaseGymData() {
         MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
+        System.out.println("Hola");
     }
 
     public void guardarClase(ClaseGym c) {
