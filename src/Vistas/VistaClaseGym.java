@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import java.util.List;
+import modelo.Entrenador;
+import persistencia.EntrenadorData;
 /**
  *
  * @author verit
@@ -12,11 +15,23 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaClaseGym.class.getName());
 
+    private EntrenadorData ed = null;
+    
     /**
      * Creates new form VistaClaseGym
      */
     public VistaClaseGym() {
         initComponents();
+        ed = new EntrenadorData();
+        cargarEntrenadores();
+    }
+    
+    public void cargarEntrenadores(){
+        List<Entrenador> lista = ed.listarEntrenador();
+        
+        for (Entrenador e : lista){
+            cboEntrenador.addItem(e.getNombre()+ " " + e.getApellido());
+        }
     }
 
     /**
@@ -47,7 +62,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnLimpiar = new javax.swing.JButton();
         cboEntrenador = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtHorario.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -156,7 +171,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                                 .addComponent(btnLimpiar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSalir)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboEntrenador, chkEstado, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});

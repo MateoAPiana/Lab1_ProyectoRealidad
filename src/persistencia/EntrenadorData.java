@@ -2,7 +2,9 @@ package persistencia;
 
 import modelo.Entrenador;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.util.List;
 
 public class EntrenadorData {
 
@@ -14,7 +16,7 @@ public class EntrenadorData {
     }
 
     public void guardarEntrenador(Entrenador entrenador) {
-        String sql = "INSERT INTO Entrenadores (DNI, Nombre, Apellido, Especialidad, Estado) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Entrenador (DNI, Nombre, Apellido, Especialidad, Estado) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entrenador.getDni());
@@ -35,7 +37,7 @@ public class EntrenadorData {
     }
 
     public Entrenador buscarEntrenadorPorId(int id) {
-        String sql = "SELECT DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenadores WHERE ID_Entrenador = ? AND Estado = 1";
+        String sql = "SELECT DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador WHERE ID_Entrenador = ? AND Estado = 1";
         Entrenador entrenador = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -57,5 +59,29 @@ public class EntrenadorData {
             JOptionPane.showMessageDialog(null, "Error al buscar el entrenador: " + ex.getMessage());
         }
         return entrenador;
+    }
+    
+    public List<Entrenador> listarEntrenador() {
+        String sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador WHERE Estado = 1";
+        List<Entrenador> list_entrenador = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Entrenador entrenador = null;
+                entrenador = new Entrenador();
+                entrenador.setIdEntrenador(rs.getInt("id_entrenador"));
+                entrenador.setDni(rs.getString("DNI"));
+                entrenador.setNombre(rs.getString("Nombre"));
+                entrenador.setApellido(rs.getString("Apellido"));
+                entrenador.setEspecialidad(rs.getString("Especialidad"));
+                entrenador.setEstado(rs.getBoolean("Estado"));
+                list_entrenador.add(entrenador);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el entrenador: " + ex.getMessage());
+        }
+        return list_entrenador;
     }
 }
