@@ -8,5 +8,5 @@ module Lab1_ProyectoRealidad {
     requires java.sql;
     requires java.desktop;
     requires java.logging;
-    exports Vistas;
+    exports vistas;
 }
