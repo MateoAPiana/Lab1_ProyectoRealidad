@@ -15,7 +15,6 @@ public class ClaseGymData {
     public ClaseGymData() {
         MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
-        System.out.println("Hola");
     }
 
     public void guardarClase(ClaseGym c) {
@@ -40,7 +39,7 @@ public class ClaseGymData {
     }
 
     public ClaseGym buscarClase(int id) {
-        String sql = "SELECT id_clase, disciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
+        String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
         ClaseGym c = null;
         EntrenadorData ed = new EntrenadorData();
         try {
@@ -50,7 +49,7 @@ public class ClaseGymData {
             if (rs.next()) {
                 c = new ClaseGym();
                 c.setId(rs.getInt("id_clase"));
-                c.setDiciplina(rs.getString("disciplina"));
+                c.setDiciplina(rs.getString("diciplina"));
                 c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt("id_entrenador")));
                 c.setHorario(rs.getString("horario"));
                 c.setCapacidad(rs.getInt("capacidad"));

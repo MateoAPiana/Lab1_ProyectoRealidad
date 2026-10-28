@@ -18,7 +18,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaClaseGym.class.getName());
 
     private EntrenadorData ed = null;
-    private ClaseGymData ec = null;
+    private ClaseGymData cd = null;
     
     /**
      * Creates new form VistaClaseGym
@@ -26,7 +26,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     public VistaClaseGym() {
         initComponents();
         ed = new EntrenadorData();
-        ec = new ClaseGymData();
+        cd = new ClaseGymData();
         cargarEntrenadores();
     }
     
@@ -77,6 +77,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtCapacidad.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -112,6 +113,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -239,7 +241,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         c.setEntrenador(e);
         c.setHorario(txtHorario.getText());
         c.setEstado(chkEstado.isSelected());
-        ec.guardarClase(c);
+        cd.guardarClase(c);
         btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -269,9 +271,20 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         c.setEntrenador(e);
         c.setHorario(txtHorario.getText());
         c.setEstado(chkEstado.isSelected());
-        ec.actualizarClase(c);
+        cd.actualizarClase(c);
         btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int id = Integer.parseInt(txtIdClase.getText());
+        ClaseGym c = cd.buscarClase(id);
+        cd.darDeBajaClase(c);
+        btnLimpiarActionPerformed(evt);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
