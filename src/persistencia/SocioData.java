@@ -79,4 +79,84 @@ public class SocioData {
             JOptionPane.showMessageDialog(null, "Error al dar de baja al socio: " + ex.getMessage());
         }
     }
+
+    public void modificarSocio(Socio socio) {
+        String sql = "UPDATE socio SET dni = ?, apellido = ?, nombre = ?, edad = ?, correo = ?, telefono = ?, estado = ? WHERE id_socio = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, socio.getDni());
+            ps.setString(2, socio.getApellido());
+            ps.setString(3, socio.getNombre());
+            ps.setInt(4, socio.getEdad());
+            ps.setString(5, socio.getCorreo());
+            ps.setString(6, socio.getTelefono());
+            ps.setBoolean(7, socio.isEstado());
+            ps.setInt(8, socio.getIdSocio()); 
+
+            int filasCambiadas = ps.executeUpdate();
+
+            if (filasCambiadas == 1) {
+                JOptionPane.showMessageDialog(null, "¡Modificación exitosa!");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el socio a modificar.");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el socio: " + ex.getMessage());
+        }
+    }
+
+    public void eliminarSocio(int idSocio) {
+        String sql = "DELETE FROM socio WHERE id_socio = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+
+            int filasBorradas = ps.executeUpdate();
+            if (filasBorradas == 1) {
+                JOptionPane.showMessageDialog(null, "¡Socio eliminado correctamente!");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el socio a eliminar.");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el socio: " + ex.getMessage());
+        }
+    }
+
+    public Socio buscarSocioPorDni(int dni) {
+        String sql = "SELECT id_socio, dni, apellido, nombre, edad, correo, telefono, estado FROM socio WHERE dni = ?";
+        Socio socio = null;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                socio = new Socio();
+                socio.setIdSocio(rs.getInt("id_socio"));
+                socio.setDni(rs.getString("dni"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setNombre(rs.getString("nombre"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getString("telefono"));
+                socio.setEstado(rs.getBoolean("estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún socio con ese DNI.");
+            }
+
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+        }
+
+        return socio;
+    }
 }
