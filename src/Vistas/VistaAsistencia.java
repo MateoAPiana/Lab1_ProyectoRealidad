@@ -107,6 +107,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -122,6 +123,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -245,6 +247,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
         ad.registrarAsistencia(asistencia);
         
+        btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
@@ -269,12 +272,26 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         
         Asistencia asistencia = new Asistencia(id_asistencia, socio, claseGym, fecha);
         ad.actualizarAsistencia(asistencia);
+        btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int id_asistencia = Integer.parseInt(txtIdAsistencia.getText());
         ad.borrarAsistencia(id_asistencia);
+        btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtIdAsistencia.setText("");
+        txtFechaInicio.setText("");
+        cboClase.setSelectedIndex(0);
+        cboSocio.setSelectedIndex(0);
+        chkEstado.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
