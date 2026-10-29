@@ -7,7 +7,7 @@ import modelo.Socio;
 import persistencia.ClaseGymData;
 import persistencia.EntrenadorData;
 
-public class MainClass {
+public class Prueba {
 
     public static void main(String[] args) {
         System.out.println("=== INTEGRANTES DEL GRUPO ===");
