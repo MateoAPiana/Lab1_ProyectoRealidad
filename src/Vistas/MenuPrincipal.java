@@ -76,6 +76,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Pases");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Asistencias");
@@ -121,20 +126,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jMenu3MouseClicked
-private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {
-    mainPanel.removeAll();
-    mainPanel.repaint();
 
-    VistaPase vp = new VistaPase();
-    vp.setSize(860, 300);
-    int x = (mainPanel.getWidth() - vp.getWidth()) / 2;
-    int y = (mainPanel.getHeight() - vp.getHeight()) / 2;
-    vp.setLocation(x, y);
-
-    mainPanel.add(vp);
-    vp.revalidate(); // <-- ¡Importante para que se refresque el panel!
-    vp.setVisible(true);
-}
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed
@@ -170,6 +162,23 @@ mainPanel.removeAll();
 
 
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        mainPanel.removeAll();
+    mainPanel.repaint();
+
+    VistaPase vp = new VistaPase();
+    //vp.setSize(860, 300);
+    
+    int x = (mainPanel.getWidth() - vp.getWidth()) / 2;
+    int y = (mainPanel.getHeight() - vp.getHeight()) / 2;
+    vp.setLocation(x, y);
+
+    mainPanel.add(vp);
+    vp.revalidate();
+    vp.repaint();
+    vp.setVisible(true);
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
