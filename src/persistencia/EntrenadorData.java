@@ -71,7 +71,7 @@ public class EntrenadorData {
         
         int exito = ps.executeUpdate();
         if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "¡Entrenador modificado exitosamente!");
+            JOptionPane.showMessageDialog(null, "Entrenador modificado exitosamente");
         }
         ps.close();
     } catch (SQLException ex) {
@@ -87,7 +87,7 @@ public void eliminarEntrenador(int id) {
         
         int exito = ps.executeUpdate();
         if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "¡Entrenador dado de baja correctamente!");
+            JOptionPane.showMessageDialog(null, "Entrenador dado de baja correctamente");
         }
         ps.close();
     } catch (SQLException ex) {
