@@ -80,6 +80,44 @@ public class PaseData {
         return pase;
     }
     
+    public Pase buscarPasePorSocio(int id_socio) {
+        String sql = "SELECT id_pase, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE id_socio = ? AND Estado = 1 AND cantidad_entradas > 0";
+        Pase pase = null;
+        SocioData sd = new SocioData();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id_socio);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                pase = new Pase();
+                pase.setId(rs.getInt(1));
+                pase.setSocio(sd.buscarSocioPorId(id_socio));
+                pase.setCant_entradas(rs.getInt(2));
+                String fecha_inicio = rs.getString(3);
+                int iYear = Integer.parseInt(fecha_inicio.substring(0, 4));
+                int iMounth = Integer.parseInt(fecha_inicio.substring(5, 7));
+                int iDay = Integer.parseInt(fecha_inicio.substring(8));
+                pase.setFecha_inicio(LocalDate.of(iYear, iMounth, iDay));
+                String fecha_fin = rs.getString(4);
+                int fYear = Integer.parseInt(fecha_fin.substring(0, 4));
+                int fMounth = Integer.parseInt(fecha_fin.substring(5, 7));
+                int fDay = Integer.parseInt(fecha_fin.substring(8));
+                pase.setFecha_fin(LocalDate.of(fYear, fMounth, fDay));
+                pase.setCosto(rs.getFloat(5));
+                pase.setEstado(rs.getBoolean(6));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un socio con ese ID.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+        }
+        return pase;
+    }
+    
     public void actualizarPase(Pase p){
         String sql = "UPDATE pase SET id_socio = ?, cantidad_entradas = ?, fecha_inicio = ?, fecha_fin = ?, costo = ?, estado=? WHERE id_pase = ?";
         try{

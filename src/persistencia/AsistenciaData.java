@@ -3,6 +3,7 @@ package persistencia;
 import modelo.Asistencia;
 import modelo.Socio;
 import modelo.ClaseGym;
+import modelo.Pase;
 import java.sql.*;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -14,17 +15,27 @@ public class AsistenciaData {
     private SocioData socioData;
 
     private ClaseGymData clasegymData;
+    
+    private PaseData paseData;
 
     public AsistenciaData() {
         MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
         socioData = new SocioData();
         clasegymData = new ClaseGymData();
+        paseData = new PaseData();
     }
 
-    public void registrarAsistencia(Asistencia asistencia) {
+    public boolean registrarAsistencia(Asistencia asistencia) {
         String sql = "INSERT INTO Asistencias (ID_Socio, ID_Clase, Fecha_Asistencia) VALUES (?, ?, ?)";
         try {
+            
+            Pase p = paseData.buscarPasePorSocio(asistencia.getSocio().getIdSocio());
+            
+            if(p == null){
+                return false;
+            }
+            
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, asistencia.getSocio().getIdSocio());
             ps.setInt(2, asistencia.getClase().getId());
@@ -33,12 +44,16 @@ public class AsistenciaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 asistencia.setIdAsistencia(rs.getInt(1));
+                p.setCant_entradas(p.getCant_entradas() - 1);
+                if(p.getCant_entradas() <= 0) p.setEstado(false);
+                paseData.actualizarPase(p);
                 JOptionPane.showMessageDialog(null, "¡Asistencia registrada con éxito!");
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al registrar la asistencia: " + ex.getMessage());
         }
+        return true;
     }
 
     public Asistencia buscarAsistenciaPorId(int id) {
