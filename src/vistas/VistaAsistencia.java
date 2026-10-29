@@ -78,7 +78,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         txtFechaInicio = new javax.swing.JTextField();
         cboClase = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -91,6 +91,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -248,6 +249,26 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSocioActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int id_asistencia = Integer.parseInt(txtIdAsistencia.getText());
+        
+        int id_socio = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
+        Socio socio = sd.buscarSocioPorId(id_socio);
+        
+        int id_clase = Integer.parseInt(cboClase.getSelectedItem().toString().split(" ")[0]);
+        ClaseGym claseGym = cd.buscarClase(id_clase);
+        
+        String st_fecha = txtFechaInicio.getText();
+        int ano = Integer.parseInt(st_fecha.substring(0, 4));
+        int mes = Integer.parseInt(st_fecha.substring(5, 7));
+        int dia = Integer.parseInt(st_fecha.substring(8));
+        
+        LocalDate fecha = LocalDate.of(ano, mes, dia);
+        
+        Asistencia asistencia = new Asistencia(id_asistencia, socio, claseGym, fecha);
+        ad.actualizarAsistencia(asistencia);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
