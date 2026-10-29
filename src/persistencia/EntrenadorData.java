@@ -17,7 +17,6 @@ public class EntrenadorData {
 
     public void guardarEntrenador(Entrenador entrenador) {
         String sql = "INSERT INTO Entrenador (DNI, Nombre, Apellido, Especialidad, Estado) VALUES (?, ?, ?, ?, ?)";
-        String sql = "INSERT INTO Entrenador (DNI, Nombre, Apellido, Especialidad, Estado) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entrenador.getDni());
