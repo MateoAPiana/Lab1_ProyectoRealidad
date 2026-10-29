@@ -4,9 +4,12 @@
  */
 package vistas;
 
+import java.time.LocalDate;
 import java.util.List;
+import modelo.Asistencia;
 import modelo.Socio;
 import modelo.ClaseGym;
+import persistencia.AsistenciaData;
 import persistencia.ClaseGymData;
 import persistencia.SocioData;
 
@@ -24,10 +27,12 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     
     private SocioData sd = null;
     private ClaseGymData cd = null;
+    private AsistenciaData ad = null;
     
     public VistaAsistencia() {
         sd = new SocioData();
         cd = new ClaseGymData();
+        ad = new AsistenciaData();
         initComponents();
         cargarSocios();
         cargarClases();
@@ -43,7 +48,6 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     public void cargarClases(){
         List<ClaseGym> clases = cd.listarClases();
         for ( ClaseGym c : clases){
-            System.out.println(c.getId() + " - " + c.getDiciplina() + " a las " + c.getHorario());
             cboClase.addItem(c.getId() + " - " + c.getDiciplina() + " a las " + c.getHorario());
         }
     }
@@ -223,7 +227,22 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        int id_socio = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
+        Socio socio = sd.buscarSocioPorId(id_socio);
+        
+        int id_clase = Integer.parseInt(cboClase.getSelectedItem().toString().split(" ")[0]);
+        ClaseGym claseGym = cd.buscarClase(id_clase);
+        
+        String st_fecha = txtFechaInicio.getText();
+        int ano = Integer.parseInt(st_fecha.substring(0, 4));
+        int mes = Integer.parseInt(st_fecha.substring(5, 7));
+        int dia = Integer.parseInt(st_fecha.substring(8));
+        
+        LocalDate fecha = LocalDate.of(ano, mes, dia);
+        
+        Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
+        ad.registrarAsistencia(asistencia);
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed

@@ -12,7 +12,7 @@ import modelo.Pase;
 public class PaseData {
     private Connection con = null;
     
-    public void PaseData(){
+    public PaseData(){
         MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
     }
@@ -106,8 +106,6 @@ public class PaseData {
                 pase.setFecha_fin(LocalDate.of(fYear, fMounth, fDay));
                 pase.setCosto(rs.getFloat(5));
                 pase.setEstado(rs.getBoolean(6));
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe un socio con ese ID.");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -131,7 +129,7 @@ public class PaseData {
             ps.setBoolean(6, p.isEstado());
             ps.setInt(7, p.getId());
             
-            ps.executeUpdate(sql);
+            ps.executeUpdate();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al actualizar el pase: " + ex.getMessage());
         }

@@ -27,12 +27,13 @@ public class AsistenciaData {
     }
 
     public boolean registrarAsistencia(Asistencia asistencia) {
-        String sql = "INSERT INTO Asistencias (ID_Socio, ID_Clase, Fecha_Asistencia) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Asistencia (ID_Socio, ID_Clase, Fecha_Asistencia) VALUES (?, ?, ?)";
         try {
             
             Pase p = paseData.buscarPasePorSocio(asistencia.getSocio().getIdSocio());
             
             if(p == null){
+                JOptionPane.showMessageDialog(null, "Este socio no posee un pase con cupos");
                 return false;
             }
             
@@ -57,7 +58,7 @@ public class AsistenciaData {
     }
 
     public Asistencia buscarAsistenciaPorId(int id) {
-        String sql = "SELECT ID_Socio, ID_Clase, Fecha_Asistencia FROM Asistencias WHERE ID_Asistencia = ?";
+        String sql = "SELECT ID_Socio, ID_Clase, Fecha_Asistencia FROM Asistencia WHERE ID_Asistencia = ?";
         Asistencia asistencia = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -88,7 +89,7 @@ public class AsistenciaData {
     }
 
     public void actualizarAsistencia(Asistencia asistencia) {
-        String sql = "UPDATE Asistencias SET ID_Socio = ?, ID_Clase = ?, Fecha_Asistencia = ? WHERE ID_Asistencia = ?";
+        String sql = "UPDATE Asistencia SET ID_Socio = ?, ID_Clase = ?, Fecha_Asistencia = ? WHERE ID_Asistencia = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, asistencia.getSocio().getIdSocio());
@@ -106,7 +107,7 @@ public class AsistenciaData {
     }
 
     public void borrarAsistencia(int id) {
-        String sql = "DELETE FROM Asistencias WHERE ID_Asistencia = ?";
+        String sql = "DELETE FROM Asistencia WHERE ID_Asistencia = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
