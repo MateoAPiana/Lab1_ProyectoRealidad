@@ -47,7 +47,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         cboSocio = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
@@ -61,6 +61,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         txtCosto.setPreferredSize(new java.awt.Dimension(120, 22));
 
         txtIdPase.setPreferredSize(new java.awt.Dimension(120, 22));
+        txtIdPase.addActionListener(this::txtIdPaseActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -225,6 +226,10 @@ public class VistaPase extends javax.swing.JInternalFrame {
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSocioActionPerformed
+
+    private void txtIdPaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPaseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdPaseActionPerformed
 
     /**
      * @param args the command line arguments
