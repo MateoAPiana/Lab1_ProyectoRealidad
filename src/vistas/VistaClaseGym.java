@@ -4,6 +4,11 @@
  */
 package vistas;
 
+import java.util.List;
+import modelo.ClaseGym;
+import modelo.Entrenador;
+import persistencia.ClaseGymData;
+import persistencia.EntrenadorData;
 /**
  *
  * @author verit
@@ -12,11 +17,25 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaClaseGym.class.getName());
 
+    private EntrenadorData ed = null;
+    private ClaseGymData cd = null;
+    
     /**
      * Creates new form VistaClaseGym
      */
     public VistaClaseGym() {
         initComponents();
+        ed = new EntrenadorData();
+        cd = new ClaseGymData();
+        cargarEntrenadores();
+    }
+    
+    public void cargarEntrenadores(){
+        List<Entrenador> lista = ed.listarEntrenador();
+        
+        for (Entrenador e : lista){
+            cboEntrenador.addItem(e.getIdEntrenador() + " - " + e.getNombre()+ " " + e.getApellido());
+        }
     }
 
     /**
@@ -47,7 +66,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnLimpiar = new javax.swing.JButton();
         cboEntrenador = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtHorario.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -58,6 +77,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtCapacidad.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -77,6 +97,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -92,6 +113,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -107,6 +129,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         cboEntrenador.addActionListener(this::cboEntrenadorActionPerformed);
 
@@ -156,7 +179,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                                 .addComponent(btnLimpiar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSalir)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboEntrenador, chkEstado, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
@@ -210,7 +233,16 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        ClaseGym c = new ClaseGym();
+        c.setDiciplina(txtDisciplina.getText());
+        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+        c.setEntrenador(e);
+        c.setHorario(txtHorario.getText());
+        c.setEstado(chkEstado.isSelected());
+        cd.guardarClase(c);
+        btnLimpiarActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisciplinaActionPerformed
@@ -220,6 +252,39 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private void cboEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEntrenadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboEntrenadorActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtIdClase.setText("");
+        txtCapacidad.setText("");
+        txtDisciplina.setText("");
+        txtHorario.setText("");
+        chkEstado.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        ClaseGym c = new ClaseGym();
+        c.setId(Integer.parseInt(txtIdClase.getText()));
+        c.setDiciplina(txtDisciplina.getText());
+        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+        c.setEntrenador(e);
+        c.setHorario(txtHorario.getText());
+        c.setEstado(chkEstado.isSelected());
+        cd.actualizarClase(c);
+        btnLimpiarActionPerformed(evt);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int id = Integer.parseInt(txtIdClase.getText());
+        ClaseGym c = cd.buscarClase(id);
+        cd.darDeBajaClase(c);
+        btnLimpiarActionPerformed(evt);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

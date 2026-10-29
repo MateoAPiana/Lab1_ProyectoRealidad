@@ -53,6 +53,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Entrenadores");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu2.addActionListener(this::jMenu2ActionPerformed);
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Clases");
@@ -104,6 +110,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mainPanel.add(vm);
         vm.setVisible(true);
     }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+        mainPanel.removeAll();
+        mainPanel.repaint();
+
+        VistaEntrenador ve = new VistaEntrenador();
+        ve.setSize(860, 300);
+        int x = (mainPanel.getWidth() - ve.getWidth()) / 2;
+        int y = (mainPanel.getHeight() - ve.getHeight()) / 2;
+        ve.setLocation(x, y);
+
+        mainPanel.add(ve);
+        ve.setVisible(true);
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     /**
      * @param args the command line arguments

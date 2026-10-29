@@ -3,13 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
-
+import modelo.Entrenador;
+import persistencia.EntrenadorData;
+import javax.swing.JOptionPane;
 /**
  *
  * @author verit
  */
 public class VistaEntrenador extends javax.swing.JInternalFrame {
+    private EntrenadorData entData = new EntrenadorData();
+    private Entrenador entrenadorActual = null;
     
+    private void limpiarCampos() {
+    txtIdEntrenador.setText("");
+    txtDni.setText("");
+    txtNombre.setText("");
+    txtApellido.setText("");
+    txtEspecialidad.setText("");
+    chkEstado.setSelected(false);
+    entrenadorActual = null;
+    }
+
+
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaEntrenador.class.getName());
 
     /**
@@ -47,7 +63,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         chkEstado = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -56,12 +72,15 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         txtIdEntrenador.setPreferredSize(new java.awt.Dimension(120, 22));
+        txtIdEntrenador.addActionListener(this::txtIdEntrenadorActionPerformed);
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         txtDni.setPreferredSize(new java.awt.Dimension(120, 22));
         txtDni.addActionListener(this::txtDniActionPerformed);
@@ -69,12 +88,14 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         txtNombre.setPreferredSize(new java.awt.Dimension(120, 22));
 
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtApellido.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -116,7 +137,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,11 +151,16 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
                             .addComponent(txtDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5))
-                        .addGap(29, 29, 29)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5))
+                                .addGap(29, 29, 29))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkEstado)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -142,18 +168,15 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
                                     .addComponent(txtEspecialidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                                     .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(287, 287, 287))))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLimpiar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalir))
+                                .addGap(287, 287, 287))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLimpiar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalir))))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chkEstado, txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
@@ -187,14 +210,14 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
                     .addComponent(chkEstado))
-                .addGap(48, 48, 48)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
                     .addComponent(btnModificar)
+                    .addComponent(btnGuardar)
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnSalir))
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addGap(0, 247, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chkEstado, txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
@@ -204,11 +227,170 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
 
     private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
         // TODO add your handling code here:
+        if (entrenadorActual != null) {
+        try {
+            String dni = txtDni.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String especialidad = txtEspecialidad.getText();
+            boolean estado = chkEstado.isSelected();
+
+            if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.");
+                return;
+            }
+
+            entrenadorActual.setDni(dni);
+            entrenadorActual.setNombre(nombre);
+            entrenadorActual.setApellido(apellido);
+            entrenadorActual.setEspecialidad(especialidad);
+            entrenadorActual.setEstado(estado);
+
+            entData.modificarEntrenador(entrenadorActual);
+            limpiarCampos();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar entrenador: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Primero debe buscar un entrenador mediante su ID para poder modificarlo.");
+    }
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+
+
+        try {
+        String dni = txtDni.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String especialidad = txtEspecialidad.getText();
+        boolean estado = chkEstado.isSelected();
+
+        if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios (DNI, Nombre, Apellido).");
+            return;
+        }
+
+        Entrenador entrenador = new Entrenador();
+        entrenador.setDni(dni);
+        entrenador.setNombre(nombre);
+        entrenador.setApellido(apellido);
+        entrenador.setEspecialidad(especialidad);
+        entrenador.setEstado(estado);
+
+        entData.guardarEntrenador(entrenador);
+        limpiarCampos();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage());
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtIdEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdEntrenadorActionPerformed
+        // TODO add your handling code here:
+        try {
+        int id = Integer.parseInt(txtIdEntrenador.getText());
+        entrenadorActual = entData.buscarEntrenadorPorId(id); 
+
+        if (entrenadorActual != null) {
+            txtDni.setText(entrenadorActual.getDni());
+            txtNombre.setText(entrenadorActual.getNombre());
+            txtApellido.setText(entrenadorActual.getApellido());
+            txtEspecialidad.setText(entrenadorActual.getEspecialidad());
+            chkEstado.setSelected(entrenadorActual.isEstado());
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un ID numerico valido para buscar.");
+    }
+    }//GEN-LAST:event_txtIdEntrenadorActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+try {
+        
+        String idText = txtIdEntrenador.getText();
+        String dni = txtDni.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String especialidad = txtEspecialidad.getText();
+        boolean estado = chkEstado.isSelected();
+
+        
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del entrenador a modificar.");
+            return;
+        }
+
+        if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios (DNI, Nombre, Apellido).");
+            return;
+        }
+
+       
+        int id = Integer.parseInt(idText);
+        Entrenador entrenador = new Entrenador();
+        entrenador.setIdEntrenador(id);
+        entrenador.setDni(dni);
+        entrenador.setNombre(nombre);
+        entrenador.setApellido(apellido);
+        entrenador.setEspecialidad(especialidad);
+        entrenador.setEstado(estado);
+
+     
+        entData.modificarEntrenador(entrenador);
+        JOptionPane.showMessageDialog(this, "Entrenador modificado con éxito.");
+        limpiarCampos();
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al modificar entrenador: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        try {
+       
+        String idText = txtIdEntrenador.getText();
+        
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del entrenador a eliminar.");
+            return;
+        }
+
+        int id = Integer.parseInt(idText);
+
+       
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro que desea eliminar al entrenador con ID " + id + "?", 
+                "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+       
+            entData.eliminarEntrenador(id);
+            JOptionPane.showMessageDialog(this, "Entrenador eliminado con éxito.");
+            limpiarCampos();
+        }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar entrenador: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
