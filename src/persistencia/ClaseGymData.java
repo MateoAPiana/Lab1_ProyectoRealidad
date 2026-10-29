@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.ClaseGym;
 
@@ -62,6 +64,32 @@ public class ClaseGymData {
             JOptionPane.showMessageDialog(null, "Error al buscar la clase: " + ex.getMessage());
         }
         return c;
+    }
+    
+    public List<ClaseGym> listarClases() {
+        String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE estado = 1";
+        List<ClaseGym> clase_list = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ClaseGym c = new ClaseGym();
+                EntrenadorData ed = new EntrenadorData();
+                
+                c.setId(rs.getInt("id_clase"));
+                c.setDiciplina(rs.getString("diciplina"));
+                c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt("id_entrenador")));
+                c.setHorario(rs.getString("horario"));
+                c.setCapacidad(rs.getInt("capacidad"));
+                c.setEstado(rs.getBoolean("estado"));
+                
+                clase_list.add(c);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar las clases: " + ex.getMessage());
+        }
+        return clase_list;
     }
 
     public void actualizarClase(ClaseGym c) {

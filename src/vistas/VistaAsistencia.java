@@ -4,6 +4,12 @@
  */
 package vistas;
 
+import java.util.List;
+import modelo.Socio;
+import modelo.ClaseGym;
+import persistencia.ClaseGymData;
+import persistencia.SocioData;
+
 /**
  *
  * @author verit
@@ -15,8 +21,31 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     /**
      * Creates new form VistaAsistencia
      */
+    
+    private SocioData sd = null;
+    private ClaseGymData cd = null;
+    
     public VistaAsistencia() {
+        sd = new SocioData();
+        cd = new ClaseGymData();
         initComponents();
+        cargarSocios();
+        cargarClases();
+    }
+    
+    public void cargarSocios(){
+        List<Socio> socios = sd.listarSocios();
+        for ( Socio s : socios){
+            cboSocio.addItem(s.getIdSocio() + " - " + s.getNombre() + " " + s.getApellido());
+        }
+    }
+    
+    public void cargarClases(){
+        List<ClaseGym> clases = cd.listarClases();
+        for ( ClaseGym c : clases){
+            System.out.println(c.getId() + " - " + c.getDiciplina() + " a las " + c.getHorario());
+            cboClase.addItem(c.getId() + " - " + c.getDiciplina() + " a las " + c.getHorario());
+        }
     }
 
     /**
