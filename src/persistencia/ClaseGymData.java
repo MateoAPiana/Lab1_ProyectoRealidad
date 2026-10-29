@@ -11,8 +11,8 @@ import modelo.ClaseGym;
 public class ClaseGymData {
 
     private Connection con = null;
-    
-    public void ClaseGymData(){
+
+    public ClaseGymData() {
         MiConexion conexion = new MiConexion();
         con = conexion.buscarConexion();
     }
@@ -39,7 +39,7 @@ public class ClaseGymData {
     }
 
     public ClaseGym buscarClase(int id) {
-        String sql = "SELECT id_clase, disciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
+        String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
         ClaseGym c = null;
         EntrenadorData ed = new EntrenadorData();
         try {
@@ -49,7 +49,7 @@ public class ClaseGymData {
             if (rs.next()) {
                 c = new ClaseGym();
                 c.setId(rs.getInt("id_clase"));
-                c.setDiciplina(rs.getString("disciplina"));
+                c.setDiciplina(rs.getString("diciplina"));
                 c.setEntrenador(ed.buscarEntrenadorPorId(rs.getInt("id_entrenador")));
                 c.setHorario(rs.getString("horario"));
                 c.setCapacidad(rs.getInt("capacidad"));
@@ -65,7 +65,7 @@ public class ClaseGymData {
     }
 
     public void actualizarClase(ClaseGym c) {
-        String sql = "UPDATE clasegym SET id_entrenador = ?, diciplina = ?, horario = ?, capacidad = ?, estado = ? WHERE id_clase = ?";
+        String sql = "UPDATE clasegym SET id_entrenador = ? , diciplina = ? , horario = ? , capacidad = ? , estado = ? WHERE id_clase = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, c.getEntrenador().getIdEntrenador());
@@ -73,8 +73,8 @@ public class ClaseGymData {
             ps.setString(3, c.getHorario());
             ps.setInt(4, c.getCapacidad());
             ps.setBoolean(5, c.isEstado());
-            ps.setInt(7, c.getId());
-            ps.executeUpdate(sql);
+            ps.setInt(6, c.getId());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar la clase: " + ex.getMessage());
         }
