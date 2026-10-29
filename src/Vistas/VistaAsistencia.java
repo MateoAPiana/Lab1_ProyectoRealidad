@@ -130,6 +130,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         txtFechaInicio.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -269,6 +270,11 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         Asistencia asistencia = new Asistencia(id_asistencia, socio, claseGym, fecha);
         ad.actualizarAsistencia(asistencia);
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int id_asistencia = Integer.parseInt(txtIdAsistencia.getText());
+        ad.borrarAsistencia(id_asistencia);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

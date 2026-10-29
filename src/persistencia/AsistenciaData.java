@@ -105,7 +105,7 @@ public class AsistenciaData {
             JOptionPane.showMessageDialog(null, "Error al actualizar la asistencia: " + ex.getMessage());
         }
     }
-
+    
     public void borrarAsistencia(int id) {
         String sql = "DELETE FROM Asistencia WHERE ID_Asistencia = ?";
         try {
