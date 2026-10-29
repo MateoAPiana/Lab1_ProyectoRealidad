@@ -121,7 +121,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jMenu3MouseClicked
+private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {
+    mainPanel.removeAll();
+    mainPanel.repaint();
 
+    VistaPase vp = new VistaPase();
+    vp.setSize(860, 300);
+    int x = (mainPanel.getWidth() - vp.getWidth()) / 2;
+    int y = (mainPanel.getHeight() - vp.getHeight()) / 2;
+    vp.setLocation(x, y);
+
+    mainPanel.add(vp);
+    vp.revalidate(); // <-- ¡Importante para que se refresque el panel!
+    vp.setVisible(true);
+}
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed
