@@ -2,6 +2,8 @@ package persistencia;
 
 import modelo.Socio;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -159,4 +161,36 @@ public class SocioData {
 
         return socio;
     }
+    public List<Socio> listarSocios() {
+    List<Socio> socios = new ArrayList<>();
+    
+    // Usamos 'id_socio' y 'estado' tal cual figuran en phpMyAdmin
+    String sql = "SELECT id_socio, nombre, apellido, dni, estado FROM socio WHERE estado = 1";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Socio socio = new Socio();
+            
+            // Mapeo correcto de las columnas de la base de datos
+            socio.setIdSocio(rs.getInt("id_socio"));
+            socio.setNombre(rs.getString("nombre"));
+            socio.setApellido(rs.getString("apellido"));
+            socio.setDni(rs.getString("dni")); // O getInt/getString según cómo tengas el DNI en tu clase
+            socio.setEstado(rs.getBoolean("estado")); // O setEstado según tu clase Socio
+
+            socios.add(socio);
+        }
+
+        ps.close();
+        rs.close();
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Socio: " + ex.getMessage());
+    }
+
+    return socios;
+}
 }
