@@ -137,7 +137,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mainPanel.repaint();
 
         VistaEntrenador ve = new VistaEntrenador();
-        ve.setSize(860, 300);
+        ve.setSize(560, 300);
         int x = (mainPanel.getWidth() - ve.getWidth()) / 2;
         int y = (mainPanel.getHeight() - ve.getHeight()) / 2;
         ve.setLocation(x, y);

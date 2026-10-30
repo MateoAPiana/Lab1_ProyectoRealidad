@@ -141,7 +141,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +224,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnSalir))
-                .addGap(0, 247, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chkEstado, txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
