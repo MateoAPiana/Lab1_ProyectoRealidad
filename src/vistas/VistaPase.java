@@ -3,12 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
-
+import modelo.Pase;
+import modelo.Socio;
+import persistencia.PaseData;
+import javax.swing.JOptionPane;
+import java.time.LocalDate;
 /**
  *
  * @author verit
  */
 public class VistaPase extends javax.swing.JInternalFrame {
+    private PaseData paseData = new PaseData();
+private Pase paseActual = null;
+
+private void limpiarCampos() {
+    txtIdPase.setText("");
+    cboSocio.setSelectedIndex(-1); 
+    txtCosto.setText("");
+    txtFechaInicio.setText("");
+    txtFechaFin.setText("");
+    chkEstado.setSelected(false);
+    paseActual = null;
+}
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaPase.class.getName());
 
@@ -47,11 +63,12 @@ public class VistaPase extends javax.swing.JInternalFrame {
         cboSocio = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -61,6 +78,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         txtCosto.setPreferredSize(new java.awt.Dimension(120, 22));
 
         txtIdPase.setPreferredSize(new java.awt.Dimension(120, 22));
+        txtIdPase.addActionListener(this::txtIdPaseActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -73,10 +91,12 @@ public class VistaPase extends javax.swing.JInternalFrame {
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
         btnSalir.setText("🚪 Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 51, 51));
         btnEliminar.setText("🗑️ Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         txtFechaInicio.setPreferredSize(new java.awt.Dimension(120, 22));
 
@@ -98,6 +118,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(102, 102, 255));
         btnLimpiar.setText("🧹Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(102, 102, 255));
@@ -219,12 +240,130 @@ public class VistaPase extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtFechaFinActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+    try {
+        String costoStr = txtCosto.getText();
+        String fechaIniStr = txtFechaInicio.getText();
+        String fechaFinStr = txtFechaFin.getText();
+        boolean estado = chkEstado.isSelected();
+
+        if (costoStr.isEmpty() || fechaIniStr.isEmpty() || fechaFinStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos obligatorios.");
+            return;
+        }
+
+        float costo = Float.parseFloat(costoStr);
+        LocalDate fechaInicio = LocalDate.parse(fechaIniStr);
+        LocalDate fechaFin = LocalDate.parse(fechaFinStr);
+        
+        Socio socioSeleccionado = (Socio) cboSocio.getSelectedItem();
+
+        Pase pase = new Pase();
+        pase.setSocio(socioSeleccionado);
+        pase.setCant_entradas(1); 
+        pase.setFecha_inicio(fechaInicio);
+        pase.setFecha_fin(fechaFin);
+        pase.setCosto(costo);
+        pase.setEstado(estado);
+
+        paseData.guardarPase(pase);
+        limpiarCampos();
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "El costo debe ser un número válido.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar el pase: " + ex.getMessage());
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSocioActionPerformed
+
+    private void txtIdPaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPaseActionPerformed
+    try {
+        int id = Integer.parseInt(txtIdPase.getText());
+        paseActual = paseData.buscarPase(id);  
+
+        if (paseActual != null) {
+            cboSocio.setSelectedItem(paseActual.getSocio()); 
+            txtCosto.setText(String.valueOf(paseActual.getCosto()));
+            txtFechaInicio.setText(paseActual.getFecha_inicio().toString());
+            txtFechaFin.setText(paseActual.getFecha_fin().toString());
+            chkEstado.setSelected(paseActual.isEstado());
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido para buscar.");
+    }
+    }//GEN-LAST:event_txtIdPaseActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    try {
+        String idText = txtIdPase.getText();
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese o busque el ID del pase a modificar.");
+            return;
+        }
+
+        int id = Integer.parseInt(idText);
+        float costo = Float.parseFloat(txtCosto.getText());
+        LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText());
+        LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText());
+        boolean estado = chkEstado.isSelected();
+
+        Pase pase = new Pase();
+        pase.setId(id);
+        pase.setSocio((Socio) cboSocio.getSelectedItem());
+        pase.setCant_entradas(1);
+        pase.setFecha_inicio(fechaInicio);
+        pase.setFecha_fin(fechaFin);
+        pase.setCosto(costo);
+        pase.setEstado(estado);
+
+        paseData.actualizarPase(pase);
+        JOptionPane.showMessageDialog(this, "¡Pase modificado con éxito!");
+        limpiarCampos();
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Verifique que el ID y el costo sean numéricos.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al modificar el pase: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    try {
+        String idText = txtIdPase.getText();
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del pase a eliminar.");
+            return;
+        }
+
+        int id = Integer.parseInt(idText);
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro que desea eliminar el pase con ID " + id + "?", 
+                "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            paseData.borrarPase(id);
+            JOptionPane.showMessageDialog(this, "Pase eliminado con éxito.");
+            limpiarCampos();
+        }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar el pase: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
