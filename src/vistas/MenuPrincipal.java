@@ -17,6 +17,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
     }
 
     /**
@@ -140,6 +145,7 @@ private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {
     vp.revalidate(); // <-- ¡Importante para que se refresque el panel!
     vp.setVisible(true);
 }
+
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed

@@ -8,6 +8,8 @@ import modelo.Socio;
 import persistencia.PaseData;
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
+import java.util.List;
+import persistencia.SocioData;
 /**
  *
  * @author verit
@@ -31,8 +33,19 @@ private void limpiarCampos() {
     /**
      * Creates new form VistaPase
      */
+    
+    private SocioData sd = null;
     public VistaPase() {
+        sd = new SocioData();
         initComponents();
+        cargarSocios();
+    }
+    
+    public void cargarSocios(){
+        List<Socio> socios = sd.listarSocios();
+        for ( Socio s : socios){
+            cboSocio.addItem(s.getIdSocio() + " - " + s.getNombre() + " " + s.getApellido());
+        }
     }
 
     /**
