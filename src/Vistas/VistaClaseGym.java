@@ -74,7 +74,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     }
     
     public void cargarEntrenadores(){
-        List<Entrenador> lista = ed.listarEntrenador();
+        List<Entrenador> lista = ed.listarEntrenador(false);
         
         for (Entrenador e : lista){
             cboEntrenador.addItem(e.getIdEntrenador() + " - " + e.getNombre()+ " " + e.getApellido());
