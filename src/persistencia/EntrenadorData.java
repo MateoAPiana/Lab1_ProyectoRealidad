@@ -97,8 +97,11 @@ public void eliminarEntrenador(int id) {
     }
 }
     
-    public List<Entrenador> listarEntrenador() {
-        String sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador WHERE Estado = 1";
+    public List<Entrenador> listarEntrenador(boolean mostrar) {
+        String sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador WHERE estado = 1";
+        if (mostrar){
+            sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador";
+        }
         List<Entrenador> list_entrenador = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
