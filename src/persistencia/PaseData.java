@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import modelo.Pase;
+import java.util.List;
+import java.util.ArrayList;
 
 public class PaseData {
     private Connection con = null;
@@ -41,7 +43,43 @@ public class PaseData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pase: " + ex.getMessage());
         }
     }
+    public List<Pase> listarPases(boolean mostrarDeshabilitados) {
+        List<Pase> pases = new ArrayList<>();
+        String sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1"; // O ajustalo según tu tabla
+        if (mostrarDeshabilitados) {
+        //Trae todos (activos e inactivos)
+        sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase";
+        } else {
+        // Trae solo los activos
+        sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1";
+    }
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        
+            while (rs.next()) {
+                Pase pase = new Pase();
+                pase.setId(rs.getInt("id_pase"));
+            
+                SocioData sd = new SocioData();
+                pase.setSocio(sd.buscarSocioPorId(rs.getInt("id_socio")));
+            
+                pase.setCant_entradas(rs.getInt("cantidad_entradas"));
+                pase.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
+                pase.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
+                pase.setCosto(rs.getFloat("costo"));
+                pase.setEstado(rs.getBoolean("estado"));
+            
+                pases.add(pase);
+            }
+            ps.close();
+        
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al listar los pases: " + ex.getMessage());
+        }
     
+        return pases;
+}
     public Pase buscarPase(int id) {
         String sql = "SELECT id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE id_pase = ? AND Estado = 1";
         Pase pase = null;
