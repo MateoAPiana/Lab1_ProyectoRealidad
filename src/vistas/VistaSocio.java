@@ -14,11 +14,11 @@ import persistencia.SocioData;
  */
 public class VistaSocio extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaSocio
-     */
+    private boolean mostarDesabilitados = false;
+
     public VistaSocio() {
         initComponents();
+        cargarSocios();
     }
 
     /**
@@ -47,12 +47,15 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         jEstado = new javax.swing.JCheckBox();
-        btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablaSocio = new javax.swing.JTable();
+        btnGuardar = new javax.swing.JButton();
+        chk_desabilitados = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -107,11 +110,6 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         txtTelefono.setPreferredSize(new java.awt.Dimension(120, 22));
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(102, 102, 255));
-        btnGuardar.setText("💾 Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
-
         btnModificar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(102, 102, 255));
         btnModificar.setText("🖋️ Modificar");
@@ -135,70 +133,113 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jButton1.setText("🔎Buscar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jTablaSocio.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Socio", "Nombre", "Apellido", "DNI"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTablaSocio);
+        if (jTablaSocio.getColumnModel().getColumnCount() > 0) {
+            jTablaSocio.getColumnModel().getColumn(0).setResizable(false);
+            jTablaSocio.getColumnModel().getColumn(1).setResizable(false);
+            jTablaSocio.getColumnModel().getColumn(2).setResizable(false);
+            jTablaSocio.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(102, 102, 255));
+        btnGuardar.setText("💾 Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+
+        chk_desabilitados.setText("Desabilitados");
+        chk_desabilitados.addActionListener(this::chk_desabilitadosActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(96, 96, 96)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(626, 626, 626))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(btnGuardar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnModificar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(54, 54, 54)
+                                        .addComponent(txtDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton1)
+                                    .addComponent(btnEliminar))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jEstado)))
+                                .addComponent(btnLimpiar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalir)
+                                .addGap(18, 18, 18)
+                                .addComponent(chk_desabilitados))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel7))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jEstado)))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(22, 22, 22)
                                         .addComponent(txtIdSocio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btnGuardar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnModificar))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
-                                                .addGap(54, 54, 54)
-                                                .addComponent(txtDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jButton1)
-                                            .addComponent(btnEliminar))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalir))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4))
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel4))
+                                        .addGap(20, 20, 20)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(157, 157, 157)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jEstado, txtApellido, txtCorreo, txtDni, txtEdad, txtIdSocio, txtNombre, txtTelefono});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnLimpiar, btnModificar, btnSalir});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -206,53 +247,153 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                     .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(jEstado))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar)
-                    .addComponent(btnSalir))
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jEstado))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnModificar)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnLimpiar)
+                            .addComponent(btnSalir)
+                            .addComponent(btnGuardar)
+                            .addComponent(chk_desabilitados)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jEstado, txtApellido, txtCorreo, txtDni, txtEdad, txtIdSocio, txtNombre, txtTelefono});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnLimpiar, btnModificar, btnSalir});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+private void cargarSocios() {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTablaSocio.getModel();
+        modelo.setRowCount(0);
+        
+        SocioData socioData = new SocioData();
+       
+        for (Socio socio : socioData.listarSocios(mostarDesabilitados)) {
+            modelo.addRow(new Object[]{
+                socio.getIdSocio(),
+                socio.getNombre(),
+                socio.getApellido(),
+                socio.getDni(),
+                socio.isEstado() 
+            });
+        }
+    }
+
     private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDniActionPerformed
+try {
+            int dniBuscado = Integer.parseInt(txtDni.getText());
+
+            SocioData socioData = new SocioData();
+            Socio socio = socioData.buscarSocioPorDni(dniBuscado);
+
+            if (socio != null) {
+                txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
+                txtDni.setText(socio.getDni());
+                txtNombre.setText(socio.getNombre());
+                txtApellido.setText(socio.getApellido());
+                txtEdad.setText(String.valueOf(socio.getEdad()));
+                txtCorreo.setText(socio.getCorreo());
+                txtTelefono.setText(socio.getTelefono());
+                jEstado.setSelected(socio.isEstado());
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de DNI válido.", "Atención", JOptionPane.WARNING_MESSAGE);
+        }    }//GEN-LAST:event_txtDniActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        try {
+            int dniBuscado = Integer.parseInt(txtDni.getText());
+
+            SocioData socioData = new SocioData();
+            Socio socio = socioData.buscarSocioPorDni(dniBuscado);
+
+            if (socio != null) {
+                txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
+                txtDni.setText(socio.getDni());
+                txtNombre.setText(socio.getNombre());
+                txtApellido.setText(socio.getApellido());
+                txtEdad.setText(String.valueOf(socio.getEdad()));
+                txtCorreo.setText(socio.getCorreo());
+                txtTelefono.setText(socio.getTelefono());
+                jEstado.setSelected(socio.isEstado());
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de DNI válido.", "Atención", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+try {
+        String dni = txtDni.getText().trim();
+        
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el DNI del socio a eliminar.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro que desea dar de baja al socio con DNI " + dni + "?", 
+                "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            SocioData socioData = new SocioData();
+            socioData.eliminarSocioPorDni(dni);
+            limpiarCampos();
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    cargarSocios();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
@@ -265,7 +406,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             String telefono = txtTelefono.getText();
             boolean estado = jEstado.isSelected();
 
-            Socio socio = new Socio(dni, apellido, nombre, edad, correo, telefono, estado);
+            Socio socio = new Socio(dni,  nombre, apellido, edad, correo, telefono, estado);
 
             SocioData socioData = new SocioData();
             socioData.guardarSocio(socio);
@@ -276,7 +417,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Por favor, ingresa números válidos en DNI y Edad.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }    }//GEN-LAST:event_btnGuardarActionPerformed
+        }
+        cargarSocios();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
@@ -298,68 +441,17 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        try {
-            int dniBuscado = Integer.parseInt(txtDni.getText());
-
-            SocioData socioData = new SocioData();
-            Socio socio = socioData.buscarSocioPorDni(dniBuscado);
-
-            if (socio != null) {
-                txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
-                txtDni.setText(socio.getDni()); 
-                txtNombre.setText(socio.getNombre());
-                txtApellido.setText(socio.getApellido());
-                txtEdad.setText(String.valueOf(socio.getEdad()));
-                txtCorreo.setText(socio.getCorreo());
-                txtTelefono.setText(socio.getTelefono());
-                jEstado.setSelected(socio.isEstado());
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de DNI válido.", "Atención", JOptionPane.WARNING_MESSAGE);
         }
+        cargarSocios();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarCampos();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void chk_desabilitadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_desabilitadosActionPerformed
+       
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-        try {
-            if (txtIdSocio.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Primero debes buscar un socio para poder eliminarlo.", "Atención", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            int idSocio = Integer.parseInt(txtIdSocio.getText());
-
-            int confirmacion = JOptionPane.showConfirmDialog(this,
-                    "¿Estás seguro de que deseas eliminar este socio?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                SocioData socioData = new SocioData();
-                socioData.eliminarSocio(idSocio);
-
-                limpiarCampos();
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ID de socio inválido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnSalirActionPerformed
+        mostarDesabilitados = chk_desabilitados.isSelected();
+        cargarSocios();        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_desabilitadosActionPerformed
 
     private void limpiarCampos() {
         txtIdSocio.setText("");
@@ -378,6 +470,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JCheckBox chk_desabilitados;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jEstado;
     private javax.swing.JLabel jLabel1;
@@ -389,6 +482,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTablaSocio;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDni;

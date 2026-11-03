@@ -91,7 +91,37 @@ public class SocioData {
         }
         return socio_lista;
     }
-
+public List<Socio> listarSocios(boolean mostrarDesabilitados) {
+        String sql = "SELECT id_socio, dni, nombre, apellido, edad, correo, telefono, estado FROM socio WHERE estado = 1";
+        
+        if (mostrarDesabilitados) {
+            sql = "SELECT id_socio, dni, nombre, apellido, edad, correo, telefono, estado FROM socio";
+        }
+        
+        List<Socio> socio_list = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Socio s = new Socio();
+                
+                s.setIdSocio(rs.getInt("id_socio"));
+                s.setDni(rs.getString("dni"));
+                s.setNombre(rs.getString("nombre"));
+                s.setApellido(rs.getString("apellido"));
+                s.setEdad(rs.getInt("edad"));
+                s.setCorreo(rs.getString("correo"));
+                s.setTelefono(rs.getString("telefono"));
+                s.setEstado(rs.getBoolean("estado"));
+                
+                socio_list.add(s);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los socios: " + ex.getMessage());
+        }
+        return socio_list;
+    }
     public void bajaLogicaSocio(int id) {
         String sql = "UPDATE socio SET Estado = 0 WHERE ID_Socio = ?";
         try {
@@ -186,4 +216,23 @@ public class SocioData {
 
         return socio;
     }
+    
+public void eliminarSocioPorDni(String dni) {
+    String sql = "UPDATE Socio SET estado = 0 WHERE dni = ?";
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, dni);
+        
+        int exito = ps.executeUpdate();
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Socio dado de baja correctamente por DNI");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró ningún socio con ese DNI.");
+        }
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al eliminar el socio: " + ex.getMessage());
+    }
+}    
+    
 }
