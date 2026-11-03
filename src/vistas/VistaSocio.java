@@ -135,17 +135,17 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jTablaSocio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID Socio", "Nombre", "Apellido", "DNI"
+                "ID Socio", "Nombre", "Apellido", "DNI", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                true, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -158,6 +158,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             jTablaSocio.getColumnModel().getColumn(1).setResizable(false);
             jTablaSocio.getColumnModel().getColumn(2).setResizable(false);
             jTablaSocio.getColumnModel().getColumn(3).setResizable(false);
+            jTablaSocio.getColumnModel().getColumn(4).setResizable(false);
         }
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
