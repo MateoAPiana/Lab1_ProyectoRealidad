@@ -16,7 +16,7 @@ import persistencia.SocioData;
  */
 public class VistaPase extends javax.swing.JInternalFrame {
     private PaseData paseData = new PaseData();
-private Pase paseActual = null;
+    private Pase paseActual = null;
 
 private void limpiarCampos() {
     txtIdPase.setText("");
@@ -268,10 +268,10 @@ private void limpiarCampos() {
         LocalDate fechaInicio = LocalDate.parse(fechaIniStr);
         LocalDate fechaFin = LocalDate.parse(fechaFinStr);
         
-        Socio socioSeleccionado = (Socio) cboSocio.getSelectedItem();
+        int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
 
         Pase pase = new Pase();
-        pase.setSocio(socioSeleccionado);
+        pase.setSocio(sd.buscarSocioPorId(socioId));
         pase.setCant_entradas(1); 
         pase.setFecha_inicio(fechaInicio);
         pase.setFecha_fin(fechaFin);
@@ -322,10 +322,11 @@ private void limpiarCampos() {
         LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText());
         LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText());
         boolean estado = chkEstado.isSelected();
-
+        int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
+        
         Pase pase = new Pase();
         pase.setId(id);
-        pase.setSocio((Socio) cboSocio.getSelectedItem());
+        pase.setSocio(sd.buscarSocioPorId(socioId));
         pase.setCant_entradas(1);
         pase.setFecha_inicio(fechaInicio);
         pase.setFecha_fin(fechaFin);

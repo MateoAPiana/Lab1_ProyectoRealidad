@@ -29,7 +29,7 @@ public class PaseData {
             ps.setFloat(5, pase.getCosto());
             ps.setBoolean(6, pase.isEstado());
             
-            ps.executeUpdate(sql);
+            ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -136,11 +136,11 @@ public class PaseData {
     }
     
     public void borrarPase(int id){
-        String sql = "DELETE FROM pase WHERE id = ?";
+        String sql = "DELETE FROM pase WHERE id_pase = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
-            ps.executeUpdate(sql);
+            ps.executeUpdate();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al borrar el pase: " + ex.getMessage());
         }
