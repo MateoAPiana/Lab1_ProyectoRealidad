@@ -6,6 +6,8 @@ import modelo.ClaseGym;
 import modelo.Pase;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class AsistenciaData {
@@ -86,6 +88,35 @@ public class AsistenciaData {
             JOptionPane.showMessageDialog(null, "Error al buscar la asistencia: " + ex.getMessage());
         }
         return asistencia;
+    }
+    
+    public List<Asistencia> listarAsistencias() {
+        String sql = "SELECT id_asistencia ,ID_Socio, ID_Clase, Fecha_Asistencia FROM Asistencia";
+        List<Asistencia> asistencias = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Asistencia asistencia = new Asistencia();
+                asistencia.setIdAsistencia(rs.getInt("id_asistencia"));
+                int idSocio = rs.getInt("ID_Socio");
+                int idClase = rs.getInt("ID_Clase");
+                Socio socio = socioData.buscarSocioPorId(idSocio);
+                ClaseGymData claseData = new ClaseGymData();
+                ClaseGym clase = claseData.buscarClase(idClase);
+                asistencia.setSocio(socio);
+                asistencia.setClase(clase);
+                Date sqlDate = rs.getDate("Fecha_Asistencia");
+                if (sqlDate != null) {
+                    asistencia.setFechaAsistencia(sqlDate.toLocalDate());
+                }
+                asistencias.add(asistencia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar la asistencia: " + ex.getMessage());
+        }
+        return asistencias;
     }
 
     public void actualizarAsistencia(Asistencia asistencia) {

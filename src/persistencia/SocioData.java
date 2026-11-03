@@ -41,7 +41,7 @@ public class SocioData {
     }
 
     public Socio buscarSocioPorId(int id) {
-        String sql = "SELECT DNI, Nombre, Apellido, Edad, Correo, Telefono, Estado FROM socio WHERE ID_Socio = ? AND Estado = 1";
+        String sql = "SELECT DNI, Nombre, Apellido, Edad, Correo, Telefono, Estado FROM socio WHERE ID_Socio = ?";
         Socio socio = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
