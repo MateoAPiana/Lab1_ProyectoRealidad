@@ -41,7 +41,7 @@ public class ClaseGymData {
     }
 
     public ClaseGym buscarClase(int id) {
-        String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ? AND estado = 1";
+        String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE id_clase = ?";
         ClaseGym c = null;
         EntrenadorData ed = new EntrenadorData();
         try {
@@ -68,9 +68,11 @@ public class ClaseGymData {
     
     public List<ClaseGym> listarClases(boolean mostrarDesabilitados) {
         String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE estado = 1";
+        
         if(mostrarDesabilitados){
             sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym";
         }
+        
         List<ClaseGym> clase_list = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
