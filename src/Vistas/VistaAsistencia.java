@@ -46,7 +46,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     }
     
     public void cargarClases(){
-        List<ClaseGym> clases = cd.listarClases();
+        List<ClaseGym> clases = cd.listarClases(false);
         for ( ClaseGym c : clases){
             cboClase.addItem(c.getId() + " - " + c.getDiciplina() + " a las " + c.getHorario());
         }

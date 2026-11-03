@@ -66,8 +66,11 @@ public class ClaseGymData {
         return c;
     }
     
-    public List<ClaseGym> listarClases() {
+    public List<ClaseGym> listarClases(boolean mostrarDesabilitados) {
         String sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym WHERE estado = 1";
+        if(mostrarDesabilitados){
+            sql = "SELECT id_clase, diciplina, id_entrenador, horario, capacidad, estado FROM clasegym";
+        }
         List<ClaseGym> clase_list = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
