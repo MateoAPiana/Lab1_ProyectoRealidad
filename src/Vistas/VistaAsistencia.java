@@ -5,8 +5,10 @@
 package vistas;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Asistencia;
 import modelo.Socio;
@@ -267,19 +269,21 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         
         int id_clase = Integer.parseInt(cboClase.getSelectedItem().toString().split(" ")[0]);
         ClaseGym claseGym = cd.buscarClase(id_clase);
-        
-        String st_fecha = calendarFecha.getDateFormatString();
-        int ano = Integer.parseInt(st_fecha.substring(0, 4));
-        int mes = Integer.parseInt(st_fecha.substring(5, 7));
-        int dia = Integer.parseInt(st_fecha.substring(8));
-        
-        LocalDate fecha = LocalDate.of(ano, mes, dia);
-        
-        Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
-        ad.registrarAsistencia(asistencia);
-        
-        btnLimpiarActionPerformed(evt);
-        cargarAsistencias();
+     
+        Date date_fecha = calendarFecha.getDate();
+
+        if (date_fecha != null) {
+
+            LocalDate fecha = date_fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
+            ad.registrarAsistencia(asistencia);
+
+            btnLimpiarActionPerformed(evt);
+            cargarAsistencias();
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese alguna fecha" );
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
