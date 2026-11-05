@@ -12,9 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Asistencia;
 import modelo.Socio;
+import modelo.Pase;
 import modelo.ClaseGym;
 import persistencia.AsistenciaData;
 import persistencia.ClaseGymData;
+import persistencia.PaseData;
 import persistencia.SocioData;
 
 /**
@@ -34,11 +36,14 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     private SocioData sd = null;
     private ClaseGymData cd = null;
     private AsistenciaData ad = null;
+    private PaseData pd = null;
     
     public VistaAsistencia() {
         sd = new SocioData();
         cd = new ClaseGymData();
         ad = new AsistenciaData();
+        pd = new PaseData();
+        
         initComponents();
         cargarSocios();
         cargarClases();
@@ -271,19 +276,25 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         ClaseGym claseGym = cd.buscarClase(id_clase);
      
         Date date_fecha = calendarFecha.getDate();
-
+  
         if (date_fecha != null) {
-
             LocalDate fecha = date_fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
-            ad.registrarAsistencia(asistencia);
+            Pase pase = pd.buscarPasePorSocio(id_socio);
 
-            btnLimpiarActionPerformed(evt);
-            cargarAsistencias();
-        }else{
-            JOptionPane.showMessageDialog(null, "Ingrese alguna fecha" );
+            if ((fecha.isAfter(pase.getFecha_inicio()) && fecha.isBefore(pase.getFecha_fin()) || fecha.isEqual(pase.getFecha_inicio()) || fecha.isEqual(pase.getFecha_fin()) )) {
+                Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
+                ad.registrarAsistencia(asistencia);
+
+                btnLimpiarActionPerformed(evt);
+                cargarAsistencias();
+            }else{
+                JOptionPane.showMessageDialog(null, "El pase del socio ya venció o todavía no está viguente");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese alguna fecha");
         }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
