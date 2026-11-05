@@ -118,7 +118,7 @@ public class ClaseGymData {
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
-            ps.executeUpdate(sql);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al borrar la clase: " + ex.getMessage());
         }
@@ -132,5 +132,29 @@ public class ClaseGymData {
     public void darDeAltaClase(ClaseGym c) {
         c.setEstado(true);
         actualizarClase(c);
+    }
+    
+    public boolean tieneEspacio(ClaseGym claseGym){
+        String sql = "SELECT count(id_socio), c.capacidad FROM Asistencia a, ClaseGym c WHERE a.id_clase = ? AND a.id_clase = c.id_clase GROUP BY a.id_clase";
+        boolean res = true;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, claseGym.getId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                if(rs.getInt(1) < rs.getInt(2)){
+                    res = false;
+                }else res = true;
+            } else {
+                res = true;
+                JOptionPane.showMessageDialog(null, "No existe una clase con ese ID.");
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al borrar la clase: " + ex.getMessage());
+        }
+        
+        return res;
     }
 }

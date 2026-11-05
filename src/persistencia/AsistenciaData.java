@@ -39,6 +39,13 @@ public class AsistenciaData {
                 return false;
             }
             
+            boolean estaLlena = clasegymData.tieneEspacio(asistencia.getClase());
+            
+            if(estaLlena){
+                JOptionPane.showMessageDialog(null, "Esta clase ya está llena");
+                return false;
+            }
+            
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, asistencia.getSocio().getIdSocio());
             ps.setInt(2, asistencia.getClase().getId());
