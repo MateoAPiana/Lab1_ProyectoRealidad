@@ -25,6 +25,35 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
     chkEstado.setSelected(false);
     entrenadorActual = null;
     }
+private boolean validarCamposEntrenador() {
+    if (txtDni.getText().trim().isEmpty() || 
+        txtNombre.getText().trim().isEmpty() || 
+        txtApellido.getText().trim().isEmpty() || 
+        txtEspecialidad.getText().trim().isEmpty()) {
+        
+        JOptionPane.showMessageDialog(this, "Todos los campos del entrenador son obligatorios.", "Atención", JOptionPane.WARNING_MESSAGE);
+        return false;
+    }
+
+    try {
+        int dni = Integer.parseInt(txtDni.getText().trim());
+        if (dni <= 0) {
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un número positivo.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El DNI ingresado debe ser un número válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (!txtNombre.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+") || 
+        !txtApellido.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        
+        JOptionPane.showMessageDialog(this, "El nombre y apellido del entrenador solo deben contener letras.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true;
+}
 
 
 
@@ -301,7 +330,9 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        if (!validarCamposEntrenador()) {
+        return;
+        }
 
         try {
         String dni = txtDni.getText();
@@ -350,8 +381,10 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIdEntrenadorActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-try {
+        if (!validarCamposEntrenador()) {
+        return;
+        }
+        try {
         
         String idText = txtIdEntrenador.getText();
         String dni = txtDni.getText();
@@ -525,7 +558,6 @@ for (Entrenador ent : lista) {
     fila[3] = ent.getApellido();
     fila[4] = ent.getEspecialidad();
     fila[5] = ent.isEstado()? "Activo" : "Inactivo";
-    
     tabla.addRow(fila);}
 }
 
