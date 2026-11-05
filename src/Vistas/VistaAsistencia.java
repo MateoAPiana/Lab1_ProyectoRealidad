@@ -5,6 +5,7 @@
 package vistas;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.Asistencia;
@@ -109,10 +110,10 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        txtFechaInicio = new javax.swing.JTextField();
         cboClase = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tAsistencias = new javax.swing.JTable();
+        calendarFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -161,8 +162,6 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         btnEliminar.setText("🗑️ Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        txtFechaInicio.setPreferredSize(new java.awt.Dimension(120, 22));
-
         cboClase.addActionListener(this::cboClaseActionPerformed);
 
         tAsistencias.setModel(new javax.swing.table.DefaultTableModel(
@@ -202,11 +201,11 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtIdAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cboClase, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboSocio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtIdAsistencia, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                    .addComponent(calendarFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -218,7 +217,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboClase, cboSocio, txtFechaInicio, txtIdAsistencia});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboClase, cboSocio, txtIdAsistencia});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnSalir});
 
@@ -227,7 +226,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,9 +241,9 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
                             .addComponent(cboClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(calendarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -255,7 +254,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
                 .addGap(83, 83, 83))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboClase, cboSocio, txtFechaInicio, txtIdAsistencia});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboClase, cboSocio, txtIdAsistencia});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnSalir});
 
@@ -269,7 +268,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
         int id_clase = Integer.parseInt(cboClase.getSelectedItem().toString().split(" ")[0]);
         ClaseGym claseGym = cd.buscarClase(id_clase);
         
-        String st_fecha = txtFechaInicio.getText();
+        String st_fecha = calendarFecha.getDateFormatString();
         int ano = Integer.parseInt(st_fecha.substring(0, 4));
         int mes = Integer.parseInt(st_fecha.substring(5, 7));
         int dia = Integer.parseInt(st_fecha.substring(8));
@@ -296,7 +295,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         txtIdAsistencia.setText("");
-        txtFechaInicio.setText("");
+        calendarFecha.setDate(null);
         cboClase.setSelectedIndex(0);
         cboSocio.setSelectedIndex(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
@@ -339,6 +338,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;
+    private com.toedter.calendar.JDateChooser calendarFecha;
     private javax.swing.JComboBox<String> cboClase;
     private javax.swing.JComboBox<String> cboSocio;
     private javax.swing.JLabel jLabel1;
@@ -348,7 +348,6 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tAsistencias;
-    private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JTextField txtIdAsistencia;
     // End of variables declaration//GEN-END:variables
 }
