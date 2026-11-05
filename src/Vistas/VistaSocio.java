@@ -397,6 +397,9 @@ try {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (!validarCamposSocio()) {
+        return; 
+        }
         try {
             String dni = txtDni.getText();
             String nombre = txtNombre.getText();
@@ -423,6 +426,9 @@ try {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (!validarCamposSocio()) {
+        return; // Si algo falla, frena acá
+        }
         try {
             int idSocio = Integer.parseInt(txtIdSocio.getText());
             String dni = txtDni.getText();
@@ -464,7 +470,39 @@ try {
         txtTelefono.setText("");
         jEstado.setSelected(false);
     }
+private boolean validarCamposSocio() {
+    if (txtDni.getText().trim().isEmpty() || 
+        txtNombre.getText().trim().isEmpty() || 
+        txtApellido.getText().trim().isEmpty() || 
+        txtEdad.getText().trim().isEmpty() || 
+        txtCorreo.getText().trim().isEmpty() || 
+        txtTelefono.getText().trim().isEmpty()) {
+        
+        JOptionPane.showMessageDialog(this, "No puede haber campos vacíos.", "Atención", JOptionPane.WARNING_MESSAGE);
+        return false;
+    }
 
+    try {
+        int dni = Integer.parseInt(txtDni.getText().trim());
+        int edad = Integer.parseInt(txtEdad.getText().trim());
+
+        if (dni <= 0 || edad <= 0) {
+            JOptionPane.showMessageDialog(this, "El DNI y la edad deben ser mayores a cero.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El DNI y la Edad deben ser campos numéricos válidos.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (!txtNombre.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+") || 
+        !txtApellido.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        
+        JOptionPane.showMessageDialog(this, "El nombre y el apellido solo deben contener letras.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
