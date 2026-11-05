@@ -5,6 +5,7 @@
 package vistas;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ClaseGym;
@@ -94,8 +95,6 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         txtCapacidad = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        chkEstado = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
@@ -127,10 +126,6 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtCapacidad.setPreferredSize(new java.awt.Dimension(120, 22));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("☑️ Estado:");
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(102, 102, 255));
@@ -218,11 +213,9 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
+                                            .addComponent(jLabel5))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(chkEstado)
                                             .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(67, 67, 67)
@@ -242,7 +235,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                         .addGap(0, 48, Short.MAX_VALUE))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboEntrenador, chkEstado, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboEntrenador, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
@@ -270,11 +263,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(chkEstado))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(cboEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -290,7 +279,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboEntrenador, chkEstado, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboEntrenador, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
@@ -299,16 +288,39 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         ClaseGym c = new ClaseGym();
-        c.setDiciplina(txtDisciplina.getText());
-        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
-        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
-        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
-        c.setEntrenador(e);
-        c.setHorario(txtHorario.getText());
-        c.setEstado(chkEstado.isSelected());
-        cd.guardarClase(c);
-        btnLimpiarActionPerformed(evt);
-        cargarClasesGym();
+        try {
+            String diciplina = txtDisciplina.getText();
+            int capacidad = Integer.parseInt(txtCapacidad.getText());
+            int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+            Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+            String horario = txtHorario.getText();
+            
+            String pt_diciplina = "(\\w|\\s){3,}";
+            String pt_horario = "\\d\\d:\\d\\d";
+            
+            if(!Pattern.matches(pt_diciplina, diciplina)){
+                throw new Error("Ingrese algún valor válido en diciplina");
+            }
+            
+            if(!Pattern.matches(pt_horario, horario)){
+                throw new Error("Ingrese algún valor válido en horario (12:30)");
+            }
+            
+            c.setDiciplina(diciplina);
+            c.setCapacidad(capacidad);
+            c.setEntrenador(e);
+            c.setHorario(horario);
+            c.setEstado(true);
+            
+            cd.guardarClase(c);
+            btnLimpiarActionPerformed(evt);
+            cargarClasesGym();
+            
+        } catch (Error ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese un valor válido para Capacidad");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisciplinaActionPerformed
@@ -324,22 +336,44 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         txtCapacidad.setText("");
         txtDisciplina.setText("");
         txtHorario.setText("");
-        chkEstado.setSelected(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         ClaseGym c = new ClaseGym();
-        c.setId(Integer.parseInt(txtIdClase.getText()));
-        c.setDiciplina(txtDisciplina.getText());
-        c.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
-        int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
-        Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
-        c.setEntrenador(e);
-        c.setHorario(txtHorario.getText());
-        c.setEstado(chkEstado.isSelected());
-        cd.actualizarClase(c);
-        btnLimpiarActionPerformed(evt);
-        cargarClasesGym();
+        
+        try{
+            String diciplina = txtDisciplina.getText();
+            int id = Integer.parseInt(txtIdClase.getText());
+            int capacidad = Integer.parseInt(txtCapacidad.getText());
+            int idEntrenador = Integer.parseInt(cboEntrenador.getSelectedItem().toString().split(" ")[0]);
+            Entrenador e = ed.buscarEntrenadorPorId(idEntrenador);
+            String horario = txtHorario.getText();
+
+            String pt_diciplina = "(\\w|\\s){3,}";
+            String pt_horario = "\\d\\d:\\d\\d";
+
+            if (!Pattern.matches(pt_diciplina, diciplina)) {
+                throw new Error("Ingrese algún valor válido en diciplina");
+            }
+
+            if (!Pattern.matches(pt_horario, horario)) {
+                throw new Error("Ingrese algún valor válido en horario (12:30)");
+            }
+
+            c.setId(id);
+            c.setDiciplina(diciplina);
+            c.setCapacidad(capacidad);
+            c.setEntrenador(e);
+            c.setHorario(horario);
+            
+            cd.actualizarClase(c);
+            btnLimpiarActionPerformed(evt);
+            cargarClasesGym();
+        } catch (Error ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese un valor válido para Capacidad");
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -347,35 +381,38 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id = Integer.parseInt(txtIdClase.getText());
-        ClaseGym c = cd.buscarClase(id);
-        cd.darDeBajaClase(c);
-        btnLimpiarActionPerformed(evt);
-        cargarClasesGym();
+        try {
+            int id = Integer.parseInt(txtIdClase.getText());
+            ClaseGym c = cd.buscarClase(id);
+            cd.darDeBajaClase(c);
+            btnLimpiarActionPerformed(evt);
+            cargarClasesGym();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese un valor válido para Capacidad");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-                try {
-        
-        int idBuscado = Integer.parseInt(txtIdClase.getText());
-        
-        ClaseGym clase = cd.buscarClase(idBuscado);
-  
-        if (clase != null) {
-            txtDisciplina.setText(clase.getDiciplina());
-            txtHorario.setText(clase.getHorario());
-            txtCapacidad.setText(String.valueOf(clase.getCapacidad()));
-            chkEstado.setSelected(clase.isEstado());                    
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontro ninguna clase con ese ID.", "Atencion", JOptionPane.INFORMATION_MESSAGE);
-        }
+        try {
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de ID valido.", "Atencion", JOptionPane.WARNING_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al buscar la clase: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            int idBuscado = Integer.parseInt(txtIdClase.getText());
+
+            ClaseGym clase = cd.buscarClase(idBuscado);
+
+            if (clase != null) {
+                txtDisciplina.setText(clase.getDiciplina());
+                txtHorario.setText(clase.getHorario());
+                txtCapacidad.setText(String.valueOf(clase.getCapacidad()));
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontro ninguna clase con ese ID.", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de ID valido.", "Atencion", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar la clase: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void chk_desabilitadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_desabilitadosActionPerformed
@@ -415,7 +452,6 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboEntrenador;
-    private javax.swing.JCheckBox chkEstado;
     private javax.swing.JCheckBox chk_desabilitados;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -423,7 +459,6 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tClasesGym;
