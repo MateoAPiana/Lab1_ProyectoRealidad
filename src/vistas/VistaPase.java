@@ -413,6 +413,7 @@ private void cargarTabla() {
         paseData.actualizarPase(pase);
         JOptionPane.showMessageDialog(this, "¡Pase modificado con éxito!");
         limpiarCampos();
+        cargarTabla();
 
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Verifique que el ID y el costo sean numéricos.");
@@ -439,6 +440,7 @@ private void cargarTabla() {
             paseData.borrarPase(id);
             JOptionPane.showMessageDialog(this, "Pase eliminado con éxito.");
             limpiarCampos();
+            cargarTabla();
         }
 
     } catch (NumberFormatException ex) {

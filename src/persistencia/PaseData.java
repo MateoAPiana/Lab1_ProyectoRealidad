@@ -45,13 +45,13 @@ public class PaseData {
     }
     public List<Pase> listarPases(boolean mostrarDeshabilitados) {
         List<Pase> pases = new ArrayList<>();
-        String sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1"; // O ajustalo según tu tabla
+        String sql = "SELECT id_pase, id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1"; // O ajustalo según tu tabla
         if (mostrarDeshabilitados) {
         //Trae todos (activos e inactivos)
-        sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase";
+        sql = "SELECT id_pase, id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase";
         } else {
         // Trae solo los activos
-        sql = "SELECT id_pase, id_socio, cant_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1";
+        sql = "SELECT id_pase, id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1";
     }
         try {
             PreparedStatement ps = con.prepareStatement(sql);
