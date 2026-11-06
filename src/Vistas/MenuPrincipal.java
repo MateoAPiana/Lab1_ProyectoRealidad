@@ -4,12 +4,19 @@
  */
 package vistas;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
 /**
  *
  * @author user
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
+    
+    FondoPanel fondo= new FondoPanel();
     private static final java.util.logging.Logger logger = java.util.logging.Logger
             .getLogger(MenuPrincipal.class.getName());
 
@@ -17,7 +24,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
+        
+        this.setContentPane(fondo);
         initComponents();
+        mainPanel.setOpaque(false);
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -54,7 +64,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 546, Short.MAX_VALUE)
+            .addGap(0, 572, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Socios");
@@ -114,7 +124,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +169,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mainPanel.repaint();
 
         VistaEntrenador ve = new VistaEntrenador();
-        ve.setSize(560, 300);
         int x = (mainPanel.getWidth() - ve.getWidth()) / 2;
         int y = (mainPanel.getHeight() - ve.getHeight()) / 2;
         ve.setLocation(x, y);
@@ -251,4 +260,24 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     public javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
+
+    class FondoPanel extends JPanel {
+        private Image imagen;
+
+    @Override
+    public void paint(Graphics g)
+    {
+        imagen = new ImageIcon(getClass().getResource("/imagenes/imagen1.jpg")).getImage();
+        
+        g.drawImage(imagen, 0, 0,getWidth(),getHeight(),this);
+        
+        setOpaque(false);
+        
+//        super.paint(g);
+    }
+    }
+
+
+
+
 }
