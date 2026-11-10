@@ -122,7 +122,8 @@ public List<Socio> listarSocios(boolean mostrarDesabilitados) {
         }
         return socio_list;
     }
-    public void bajaLogicaSocio(int id) {
+    
+public void bajaLogicaSocio(int id) {
         String sql = "UPDATE socio SET Estado = 0 WHERE ID_Socio = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -136,9 +137,24 @@ public List<Socio> listarSocios(boolean mostrarDesabilitados) {
             JOptionPane.showMessageDialog(null, "Error al dar de baja al socio: " + ex.getMessage());
         }
     }
+    
+    public void altaLogicaSocio(int id) {
+        String sql = "UPDATE socio SET Estado = 1 WHERE ID_Socio = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Socio dado de alta exitosamente.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de alta al socio: " + ex.getMessage());
+        }
+    }
 
     public void modificarSocio(Socio socio) {
-        String sql = "UPDATE socio SET dni = ?, apellido = ?, nombre = ?, edad = ?, correo = ?, telefono = ?, estado = ? WHERE id_socio = ?";
+        String sql = "UPDATE socio SET dni = ?, apellido = ?, nombre = ?, edad = ?, correo = ?, telefono = ?WHERE id_socio = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -148,8 +164,7 @@ public List<Socio> listarSocios(boolean mostrarDesabilitados) {
             ps.setInt(4, socio.getEdad());
             ps.setString(5, socio.getCorreo());
             ps.setString(6, socio.getTelefono());
-            ps.setBoolean(7, socio.isEstado());
-            ps.setInt(8, socio.getIdSocio()); 
+            ps.setInt(7, socio.getIdSocio()); 
 
             int filasCambiadas = ps.executeUpdate();
 
