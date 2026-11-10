@@ -31,7 +31,6 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -55,7 +54,6 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="chkEstado" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNombre" linkSize="3" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtApellido" linkSize="3" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtEspecialidad" linkSize="3" alignment="0" pref="138" max="32767" attributes="0"/>
@@ -79,7 +77,7 @@
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="1084" pref="1287" max="32767" attributes="0"/>
+              <EmptySpace min="1084" pref="949" max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -121,11 +119,6 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtEspecialidad" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="chkEstado" linkSize="2" min="-2" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="189" max="-2" attributes="0"/>
               </Group>
@@ -138,7 +131,7 @@
                   <Component id="btnSalir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="chk_mostrar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="325" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -307,19 +300,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="\ud83d\udcbc Especialidad:" containsInvalidXMLChars="true"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI Emoji" size="12" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="66" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="&#x2611;&#xfe0f; Estado:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="chkEstado">
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>

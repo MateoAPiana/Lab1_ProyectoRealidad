@@ -22,7 +22,6 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
     txtNombre.setText("");
     txtApellido.setText("");
     txtEspecialidad.setText("");
-    chkEstado.setSelected(false);
     entrenadorActual = null;
     }
 private boolean validarCamposEntrenador() {
@@ -94,8 +93,6 @@ private boolean validarCamposEntrenador() {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        chkEstado = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -161,10 +158,6 @@ private boolean validarCamposEntrenador() {
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("💼 Especialidad:");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("☑️ Estado:");
-
         btnGuardar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(102, 102, 255));
         btnGuardar.setText("💾 Guardar");
@@ -204,7 +197,6 @@ private boolean validarCamposEntrenador() {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
                                     .addComponent(jLabel5))
                                 .addGap(29, 29, 29))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -223,7 +215,6 @@ private boolean validarCamposEntrenador() {
                                 .addComponent(chk_mostrar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkEstado)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
@@ -239,14 +230,14 @@ private boolean validarCamposEntrenador() {
                             .addComponent(txtDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)))
-                .addGap(1084, 1287, Short.MAX_VALUE))
+                .addGap(949, 949, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(940, 940, 940))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chkEstado, txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,11 +266,7 @@ private boolean validarCamposEntrenador() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(chkEstado)))
+                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -289,10 +276,10 @@ private boolean validarCamposEntrenador() {
                     .addComponent(btnLimpiar)
                     .addComponent(btnSalir)
                     .addComponent(chk_mostrar))
-                .addGap(0, 325, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chkEstado, txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtApellido, txtDni, txtEspecialidad, txtIdEntrenador, txtNombre});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -305,7 +292,6 @@ private boolean validarCamposEntrenador() {
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             String especialidad = txtEspecialidad.getText();
-            boolean estado = chkEstado.isSelected();
 
             if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.");
@@ -316,7 +302,6 @@ private boolean validarCamposEntrenador() {
             entrenadorActual.setNombre(nombre);
             entrenadorActual.setApellido(apellido);
             entrenadorActual.setEspecialidad(especialidad);
-            entrenadorActual.setEstado(estado);
 
             entData.modificarEntrenador(entrenadorActual);
             limpiarCampos();
@@ -339,7 +324,7 @@ private boolean validarCamposEntrenador() {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String especialidad = txtEspecialidad.getText();
-        boolean estado = chkEstado.isSelected();
+        boolean estado = true;
 
         if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios (DNI, Nombre, Apellido).");
@@ -373,7 +358,6 @@ private boolean validarCamposEntrenador() {
             txtNombre.setText(entrenadorActual.getNombre());
             txtApellido.setText(entrenadorActual.getApellido());
             txtEspecialidad.setText(entrenadorActual.getEspecialidad());
-            chkEstado.setSelected(entrenadorActual.isEstado());
         }
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Ingrese un ID numerico valido para buscar.");
@@ -391,7 +375,6 @@ private boolean validarCamposEntrenador() {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String especialidad = txtEspecialidad.getText();
-        boolean estado = chkEstado.isSelected();
 
         
         if (idText.isEmpty()) {
@@ -412,7 +395,6 @@ private boolean validarCamposEntrenador() {
         entrenador.setNombre(nombre);
         entrenador.setApellido(apellido);
         entrenador.setEspecialidad(especialidad);
-        entrenador.setEstado(estado);
 
      
         entData.modificarEntrenador(entrenador);
@@ -486,8 +468,6 @@ private boolean validarCamposEntrenador() {
             txtNombre.setText(entrenador.getNombre());
             txtApellido.setText(entrenador.getApellido());
             txtEspecialidad.setText(entrenador.getEspecialidad());
-            chkEstado.setSelected(entrenador.isEstado());
-            
          
             entrenadorActual = entrenador; 
         } else {
@@ -567,7 +547,6 @@ for (Entrenador ent : lista) {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JCheckBox chkEstado;
     private javax.swing.JCheckBox chk_mostrar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -576,7 +555,6 @@ for (Entrenador ent : lista) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtApellido;

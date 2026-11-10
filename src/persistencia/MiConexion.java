@@ -15,7 +15,7 @@ public class MiConexion{
             try {
                     Class.forName("com.mysql.jdbc.Driver");  // 1
                 //  Class.forName("org.mariadb.jdbc.Driver");  // 1
-                conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/aborigym?useSSL=false&serverTimezone=UTC", "root", "");  
+                conexion = DriverManager.getConnection("jdbc:mysql://localhost:3308/aborigym?useSSL=false&serverTimezone=UTC", "root", "");  
             } catch (SQLException | ClassNotFoundException ex) {  
                 System.out.println("No se puede conectar o no se puede cargar el driver. Error: "+ ex.getMessage());
             }

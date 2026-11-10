@@ -61,15 +61,14 @@ public class EntrenadorData {
         return entrenador;
     }
     public void modificarEntrenador(Entrenador entrenador) {
-    String sql = "UPDATE Entrenador SET DNI = ?, Nombre = ?, Apellido = ?, Especialidad = ?, Estado = ? WHERE ID_Entrenador = ?";
+    String sql = "UPDATE Entrenador SET DNI = ?, Nombre = ?, Apellido = ?, Especialidad = ? WHERE ID_Entrenador = ?";
     try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entrenador.getDni());
         ps.setString(2, entrenador.getNombre());
         ps.setString(3, entrenador.getApellido());
         ps.setString(4, entrenador.getEspecialidad());
-        ps.setBoolean(5, entrenador.isEstado());
-        ps.setInt(6, entrenador.getIdEntrenador());
+        ps.setInt(5, entrenador.getIdEntrenador());
         
         int exito = ps.executeUpdate();
         if (exito == 1) {
