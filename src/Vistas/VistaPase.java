@@ -8,9 +8,12 @@ import modelo.Socio;
 import persistencia.PaseData;
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import persistencia.SocioData;
 import javax.swing.table.DefaultTableModel;
+import modelo.Asistencia;
 /**
  *
  * @author verit
@@ -24,9 +27,8 @@ private void limpiarCampos() {
     txtIdPase.setText("");
     cboSocio.setSelectedIndex(-1); 
     txtCosto.setText("");
-    txtFechaInicio.setText("");
-    txtFechaFin.setText("");
-    chkEstado.setSelected(false);
+    fch_inicio.setDate(null);
+    fch_fin.setDate(null);
     paseActual = null;
 }
 private void armarCabeceraTabla() {
@@ -48,12 +50,12 @@ private void armarCabeceraTabla() {
     }
 
 private void cargarTabla() {
-        modelo.setRowCount(0); 
-        
-        boolean verInactivos = jCheckBox1.isSelected(); 
-        
+        modelo.setRowCount(0);
+
+        boolean verInactivos = jCheckBox1.isSelected();
+
         try {
-            List<Pase> listaPases = paseData.listarPases(verInactivos); 
+            List<Pase> listaPases = paseData.listarPases(verInactivos);
             for (Pase p : listaPases) {
                 modelo.addRow(new Object[]{
                     p.getId(),
@@ -101,6 +103,7 @@ private void cargarTabla() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtCosto = new javax.swing.JTextField();
@@ -109,11 +112,7 @@ private void cargarTabla() {
         jLabel6 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        txtFechaInicio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtFechaFin = new javax.swing.JTextField();
-        chkEstado = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -122,6 +121,11 @@ private void cargarTabla() {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePases = new javax.swing.JTable();
         jCheckBox1 = new javax.swing.JCheckBox();
+        fch_inicio = new com.toedter.calendar.JDateChooser();
+        fch_fin = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
+
+        jButton1.setText("🔎Buscar");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -158,18 +162,9 @@ private void cargarTabla() {
         btnEliminar.setText("🗑️ Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        txtFechaInicio.setPreferredSize(new java.awt.Dimension(120, 22));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("💳 Costo:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("☑️ Estado:");
-
-        txtFechaFin.setPreferredSize(new java.awt.Dimension(120, 22));
-        txtFechaFin.addActionListener(this::txtFechaFinActionPerformed);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
@@ -207,34 +202,15 @@ private void cargarTabla() {
         jCheckBox1.setText("Deshabilitados");
         jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
 
+        jButton2.setText("🔎Buscar");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtIdPase, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -255,20 +231,29 @@ private void cargarTabla() {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkEstado))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))))
+                            .addComponent(jLabel6))
+                        .addGap(238, 720, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtIdPase, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCosto, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(fch_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fch_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboSocio, chkEstado, txtCosto, txtFechaFin, txtFechaInicio, txtIdPase});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboSocio, fch_fin, fch_inicio, txtCosto, txtIdPase});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
@@ -282,7 +267,8 @@ private void cargarTabla() {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtIdPase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIdPase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -292,77 +278,67 @@ private void cargarTabla() {
                             .addComponent(jLabel4)
                             .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(fch_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(fch_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(chkEstado))
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(btnModificar)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnLimpiar)
-                            .addComponent(btnSalir)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardar)
+                        .addComponent(btnModificar)
+                        .addComponent(btnEliminar)
+                        .addComponent(btnLimpiar)
+                        .addComponent(btnSalir))
                     .addComponent(jCheckBox1))
-                .addGap(0, 86, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboSocio, chkEstado, txtCosto, txtFechaFin, txtFechaInicio, txtIdPase});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboSocio, fch_fin, fch_inicio, txtCosto, txtIdPase});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFechaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaFinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaFinActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
     try {
-        String costoStr = txtCosto.getText();
-        String fechaIniStr = txtFechaInicio.getText();
-        String fechaFinStr = txtFechaFin.getText();
-        boolean estado = chkEstado.isSelected();
+        Date fch_inicio_date = fch_inicio.getDate();
+        Date fch_fin_date = fch_fin.getDate();
 
-        if (costoStr.isEmpty() || fechaIniStr.isEmpty() || fechaFinStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos obligatorios.");
-            return;
+            if (fch_inicio_date != null && fch_fin_date != null) {
+                LocalDate fecha_inicio = fch_inicio_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fecha_fin = fch_fin_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                String costoStr = txtCosto.getText();
+
+                float costo = Float.parseFloat(costoStr);
+
+                int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
+
+                Pase pase = new Pase();
+                pase.setSocio(sd.buscarSocioPorId(socioId));
+                pase.setCant_entradas(1);
+                pase.setFecha_inicio(fecha_inicio);
+                pase.setFecha_fin(fecha_fin);
+                pase.setCosto(costo);
+                pase.setEstado(true);
+
+                paseData.guardarPase(pase);
+                limpiarCampos();
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese alguna fecha");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El costo debe ser un número válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el pase: " + ex.getMessage());
         }
-
-        float costo = Float.parseFloat(costoStr);
-        LocalDate fechaInicio = LocalDate.parse(fechaIniStr);
-        LocalDate fechaFin = LocalDate.parse(fechaFinStr);
-        
-        int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
-
-        Pase pase = new Pase();
-        pase.setSocio(sd.buscarSocioPorId(socioId));
-        pase.setCant_entradas(1); 
-        pase.setFecha_inicio(fechaInicio);
-        pase.setFecha_fin(fechaFin);
-        pase.setCosto(costo);
-        pase.setEstado(estado);
-
-        paseData.guardarPase(pase);
-        limpiarCampos();
-        cargarTabla();
-
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "El costo debe ser un número válido.");
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al guardar el pase: " + ex.getMessage());
-    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void cboSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSocioActionPerformed
@@ -370,20 +346,7 @@ private void cargarTabla() {
     }//GEN-LAST:event_cboSocioActionPerformed
 
     private void txtIdPaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPaseActionPerformed
-    try {
-        int id = Integer.parseInt(txtIdPase.getText());
-        paseActual = paseData.buscarPase(id);  
-
-        if (paseActual != null) {
-            cboSocio.setSelectedItem(paseActual.getSocio()); 
-            txtCosto.setText(String.valueOf(paseActual.getCosto()));
-            txtFechaInicio.setText(paseActual.getFecha_inicio().toString());
-            txtFechaFin.setText(paseActual.getFecha_fin().toString());
-            chkEstado.setSelected(paseActual.isEstado());
-        }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido para buscar.");
-    }
+    
     }//GEN-LAST:event_txtIdPaseActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -393,22 +356,28 @@ private void cargarTabla() {
             JOptionPane.showMessageDialog(this, "Por favor ingrese o busque el ID del pase a modificar.");
             return;
         }
+        Date fch_inicio_date = fch_inicio.getDate();
+        Date fch_fin_date = fch_fin.getDate();
+        
+        if (fch_inicio_date == null || fch_fin_date == null) {
+            JOptionPane.showMessageDialog(null, "Ingrese alguna fecha");
+            return;
+        }
+        
+        LocalDate fecha_inicio = fch_inicio_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fecha_fin = fch_fin_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         int id = Integer.parseInt(idText);
         float costo = Float.parseFloat(txtCosto.getText());
-        LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText());
-        LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText());
-        boolean estado = chkEstado.isSelected();
         int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
         
         Pase pase = new Pase();
         pase.setId(id);
         pase.setSocio(sd.buscarSocioPorId(socioId));
         pase.setCant_entradas(1);
-        pase.setFecha_inicio(fechaInicio);
-        pase.setFecha_fin(fechaFin);
+        pase.setFecha_inicio(fecha_inicio);
+        pase.setFecha_fin(fecha_fin);
         pase.setCosto(costo);
-        pase.setEstado(estado);
 
         paseData.actualizarPase(pase);
         JOptionPane.showMessageDialog(this, "¡Pase modificado con éxito!");
@@ -462,6 +431,28 @@ private void cargarTabla() {
         cargarTabla();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            int id = Integer.parseInt(txtIdPase.getText());
+            paseActual = paseData.buscarPase(id);
+
+            if (paseActual != null) {
+                cboSocio.setSelectedItem(paseActual.getSocio());
+                txtCosto.setText(String.valueOf(paseActual.getCosto()));
+                Date fch_inicio_date = Date.from(
+                        paseActual.getFecha_inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                );
+                Date fch_fin_date = Date.from(
+                        paseActual.getFecha_fin().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                );
+                fch_inicio.setDate(fch_inicio_date);
+                fch_fin.setDate(fch_fin_date);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido para buscar.");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -494,7 +485,10 @@ private void cargarTabla() {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboSocio;
-    private javax.swing.JCheckBox chkEstado;
+    private com.toedter.calendar.JDateChooser fch_fin;
+    private com.toedter.calendar.JDateChooser fch_inicio;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -502,12 +496,9 @@ private void cargarTabla() {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePases;
     private javax.swing.JTextField txtCosto;
-    private javax.swing.JTextField txtFechaFin;
-    private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JTextField txtIdPase;
     // End of variables declaration//GEN-END:variables
 }

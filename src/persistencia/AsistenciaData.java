@@ -55,7 +55,7 @@ public class AsistenciaData {
             if (rs.next()) {
                 asistencia.setIdAsistencia(rs.getInt(1));
                 p.setCant_entradas(p.getCant_entradas() - 1);
-                if(p.getCant_entradas() <= 0) p.setEstado(false);
+                if(p.getCant_entradas() <= 0) paseData.darDeBajaPase(p.getId());
                 paseData.actualizarPase(p);
                 JOptionPane.showMessageDialog(null, "¡Asistencia registrada con éxito!");
             }

@@ -155,7 +155,7 @@ public class PaseData {
     }
     
     public void actualizarPase(Pase p){
-        String sql = "UPDATE pase SET id_socio = ?, cantidad_entradas = ?, fecha_inicio = ?, fecha_fin = ?, costo = ?, estado=? WHERE id_pase = ?";
+        String sql = "UPDATE pase SET id_socio = ?, cantidad_entradas = ?, fecha_inicio = ?, fecha_fin = ?, costo = ? WHERE id_pase = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
@@ -164,8 +164,7 @@ public class PaseData {
             ps.setString(3, p.getFecha_inicio().toString());
             ps.setString(4, p.getFecha_fin().toString());
             ps.setFloat(5, p.getCosto());
-            ps.setBoolean(6, p.isEstado());
-            ps.setInt(7, p.getId());
+            ps.setInt(6, p.getId());
             
             ps.executeUpdate();
         }catch(SQLException ex){
@@ -184,13 +183,29 @@ public class PaseData {
         }
     }
     
-    public void darDeBajaPase(Pase c){
-        c.setEstado(false);
-        actualizarPase(c);
+    public void darDeBajaPase(int id){
+        String sql = "UPDATE pase SET estado=? WHERE id_pase = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean(6, false);
+            ps.setInt(7, id);
+            
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al actualizar el pase: " + ex.getMessage());
+        }
     }
     
-    public void darDeAltaPase(Pase c){
-        c.setEstado(true);
-        actualizarPase(c);
+    public void darDeAltaPase(int id){
+        String sql = "UPDATE pase SET estado=? WHERE id_pase = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean(6, true);
+            ps.setInt(7, id);
+            
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al actualizar el pase: " + ex.getMessage());
+        }
     }
 }
