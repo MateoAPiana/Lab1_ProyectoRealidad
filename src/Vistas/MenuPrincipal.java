@@ -24,7 +24,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
-        
         this.setContentPane(fondo);
         initComponents();
         mainPanel.setOpaque(false);
@@ -262,19 +261,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     class FondoPanel extends JPanel {
+
         private Image imagen;
 
-    @Override
-    public void paint(Graphics g)
-    {
-        imagen = new ImageIcon(getClass().getResource("/imagenes/imagen1.jpg")).getImage();
-        
-        g.drawImage(imagen, 0, 0,getWidth(),getHeight(),this);
-        
-        setOpaque(false);
-        
+        @Override
+        public void paintComponent(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/imagen1.jpg")).getImage();
+
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+
 //        super.paint(g);
-    }
+        }
     }
 
 
