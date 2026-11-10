@@ -123,7 +123,7 @@ public List<Socio> listarSocios(boolean mostrarDesabilitados) {
         return socio_list;
     }
     
-public void bajaLogicaSocio(int id) {
+    public void bajaLogicaSocio(int id) {
         String sql = "UPDATE socio SET Estado = 0 WHERE ID_Socio = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);

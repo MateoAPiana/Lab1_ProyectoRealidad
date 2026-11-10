@@ -60,45 +60,76 @@ public class EntrenadorData {
         }
         return entrenador;
     }
-    public void modificarEntrenador(Entrenador entrenador) {
-    String sql = "UPDATE Entrenador SET DNI = ?, Nombre = ?, Apellido = ?, Especialidad = ? WHERE ID_Entrenador = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, entrenador.getDni());
-        ps.setString(2, entrenador.getNombre());
-        ps.setString(3, entrenador.getApellido());
-        ps.setString(4, entrenador.getEspecialidad());
-        ps.setInt(5, entrenador.getIdEntrenador());
-        
-        int exito = ps.executeUpdate();
-        if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "Entrenador modificado exitosamente");
-        }
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al modificar el entrenador: " + ex.getMessage());
-    }
-}
 
-public void eliminarEntrenador(int id) {
-    String sql = "UPDATE Entrenador SET Estado = 0 WHERE ID_Entrenador = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id);
-        
-        int exito = ps.executeUpdate();
-        if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "Entrenador dado de baja correctamente");
+    public void modificarEntrenador(Entrenador entrenador) {
+        String sql = "UPDATE Entrenador SET DNI = ?, Nombre = ?, Apellido = ?, Especialidad = ? WHERE ID_Entrenador = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, entrenador.getDni());
+            ps.setString(2, entrenador.getNombre());
+            ps.setString(3, entrenador.getApellido());
+            ps.setString(4, entrenador.getEspecialidad());
+            ps.setInt(5, entrenador.getIdEntrenador());
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Entrenador modificado exitosamente");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el entrenador: " + ex.getMessage());
         }
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al eliminar el entrenador: " + ex.getMessage());
     }
-}
+
+    public void bajaLogicaEntrenador(int id) {
+        String sql = "UPDATE entrenador SET Estado = 0 WHERE ID_entrenador = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Entrenador dado de baja exitosamente.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de baja al entrenador: " + ex.getMessage());
+        }
+    }
     
+    public void altaLogicaEntrenador(int id) {
+        String sql = "UPDATE entrenador SET Estado = 1 WHERE ID_entrenador = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Entrenador dado de alta exitosamente.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de alta al entrenador: " + ex.getMessage());
+        }
+    }
+
+    public void eliminarEntrenador(int id) {
+        String sql = "UPDATE Entrenador SET Estado = 0 WHERE ID_Entrenador = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Entrenador dado de baja correctamente");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el entrenador: " + ex.getMessage());
+        }
+    }
+
     public List<Entrenador> listarEntrenador(boolean mostrar) {
         String sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador WHERE estado = 1";
-        if (mostrar){
+        if (mostrar) {
             sql = "SELECT id_entrenador, DNI, Nombre, Apellido, Especialidad, Estado FROM Entrenador";
         }
         List<Entrenador> list_entrenador = new ArrayList<>();
