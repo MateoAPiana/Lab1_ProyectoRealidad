@@ -187,8 +187,8 @@ public class PaseData {
         String sql = "UPDATE pase SET estado=? WHERE id_pase = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setBoolean(6, false);
-            ps.setInt(7, id);
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
             
             ps.executeUpdate();
         }catch(SQLException ex){
@@ -200,8 +200,8 @@ public class PaseData {
         String sql = "UPDATE pase SET estado=? WHERE id_pase = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setBoolean(6, true);
-            ps.setInt(7, id);
+            ps.setBoolean(1, true);
+            ps.setInt(2, id);
             
             ps.executeUpdate();
         }catch(SQLException ex){

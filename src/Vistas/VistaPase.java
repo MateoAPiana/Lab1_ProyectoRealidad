@@ -123,6 +123,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         fch_inicio = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         cboCupos = new javax.swing.JComboBox<>();
+        btnRestaurar = new javax.swing.JButton();
 
         jButton1.setText("🔎Buscar");
 
@@ -201,6 +202,11 @@ public class VistaPase extends javax.swing.JInternalFrame {
         cboCupos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - 1000", "4 - 3500", "8 - 7000", "30 - 28000" }));
         cboCupos.addActionListener(this::cboCuposActionPerformed);
 
+        btnRestaurar.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        btnRestaurar.setForeground(new java.awt.Color(102, 102, 255));
+        btnRestaurar.setText(" 🔁 Restaurar");
+        btnRestaurar.addActionListener(this::btnRestaurarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -218,12 +224,12 @@ public class VistaPase extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRestaurar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir)
-                        .addGap(56, 56, 56)
-                        .addComponent(jCheckBox1)
-                        .addGap(0, 45, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(259, 741, Short.MAX_VALUE))))
@@ -244,6 +250,10 @@ public class VistaPase extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBox1)
+                .addGap(64, 64, 64))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboCupos, cboSocio, fch_inicio, txtIdPase});
@@ -278,15 +288,16 @@ public class VistaPase extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(fch_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnGuardar)
-                        .addComponent(btnModificar)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnLimpiar)
-                        .addComponent(btnSalir))
-                    .addComponent(jCheckBox1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnRestaurar)
+                    .addComponent(btnSalir)
+                    .addComponent(btnLimpiar))
                 .addGap(40, 40, 40))
         );
 
@@ -401,7 +412,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                paseData.borrarPase(id);
+                paseData.darDeBajaPase(id);
                 JOptionPane.showMessageDialog(this, "Pase eliminado con éxito.");
                 limpiarCampos();
                 cargarTabla();
@@ -465,6 +476,28 @@ public class VistaPase extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboCuposActionPerformed
 
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        try {
+            String idText = txtIdPase.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del pase a retaurar.");
+                return;
+            }
+
+            int id = Integer.parseInt(idText);
+
+            paseData.darDeAltaPase(id);
+            JOptionPane.showMessageDialog(this, "Pase restaurado con éxito.");
+            limpiarCampos();
+            cargarTabla();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al reataurar el pase: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnRestaurarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -495,6 +528,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboCupos;
     private javax.swing.JComboBox<String> cboSocio;
