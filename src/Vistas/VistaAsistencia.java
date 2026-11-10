@@ -289,6 +289,9 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
                 btnLimpiarActionPerformed(evt);
                 cargarAsistencias();
             }else{
+                if(fecha.isAfter(pase.getFecha_fin())){
+                    pd.darDeBajaPase(pase.getId());
+                }
                 JOptionPane.showMessageDialog(null, "El pase del socio ya venció o todavía no está viguente");
             }
         } else {
