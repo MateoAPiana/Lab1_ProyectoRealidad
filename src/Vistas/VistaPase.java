@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
+
 import modelo.Pase;
 import modelo.Socio;
 import persistencia.PaseData;
@@ -13,43 +14,44 @@ import java.util.Date;
 import java.util.List;
 import persistencia.SocioData;
 import javax.swing.table.DefaultTableModel;
-import modelo.Asistencia;
+
 /**
  *
  * @author verit
  */
 public class VistaPase extends javax.swing.JInternalFrame {
+
     private PaseData paseData = new PaseData();
     private Pase paseActual = null;
     private DefaultTableModel modelo;
 
-private void limpiarCampos() {
-    txtIdPase.setText("");
-    cboSocio.setSelectedIndex(-1); 
-    txtCosto.setText("");
-    fch_inicio.setDate(null);
-    fch_fin.setDate(null);
-    paseActual = null;
-}
-private void armarCabeceraTabla() {
+    private void limpiarCampos() {
+        txtIdPase.setText("");
+        cboSocio.setSelectedIndex(0);
+        cboCupos.setSelectedIndex(0);
+        fch_inicio.setDate(null);
+        paseActual = null;
+    }
+
+    private void armarCabeceraTabla() {
         modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
+
         modelo.addColumn("ID Pase");
         modelo.addColumn("Socio");
         modelo.addColumn("Costo");
         modelo.addColumn("Fecha Inicio");
         modelo.addColumn("Fecha Fin");
         modelo.addColumn("Estado");
-        
+
         jTablePases.setModel(modelo);
     }
 
-private void cargarTabla() {
+    private void cargarTabla() {
         modelo.setRowCount(0);
 
         boolean verInactivos = jCheckBox1.isSelected();
@@ -70,14 +72,14 @@ private void cargarTabla() {
             JOptionPane.showMessageDialog(this, "Error al cargar los pases en la tabla: " + ex.getMessage());
         }
     }
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaPase.class.getName());
 
     /**
      * Creates new form VistaPase
      */
-    
     private SocioData sd = null;
+
     public VistaPase() {
         sd = new SocioData();
         initComponents();
@@ -85,14 +87,13 @@ private void cargarTabla() {
         armarCabeceraTabla();
         cargarTabla();
     }
-    
-    public void cargarSocios(){
+
+    public void cargarSocios() {
         List<Socio> socios = sd.listarSocios();
-        for ( Socio s : socios){
+        for (Socio s : socios) {
             cboSocio.addItem(s.getIdSocio() + " - " + s.getNombre() + " " + s.getApellido());
         }
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,10 +107,8 @@ private void cargarTabla() {
         jButton1 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtCosto = new javax.swing.JTextField();
         txtIdPase = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -122,8 +121,8 @@ private void cargarTabla() {
         jTablePases = new javax.swing.JTable();
         jCheckBox1 = new javax.swing.JCheckBox();
         fch_inicio = new com.toedter.calendar.JDateChooser();
-        fch_fin = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
+        cboCupos = new javax.swing.JComboBox<>();
 
         jButton1.setText("🔎Buscar");
 
@@ -139,18 +138,12 @@ private void cargarTabla() {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("🪪 ABORIGYM - GESTIÓN DE PASES");
 
-        txtCosto.setPreferredSize(new java.awt.Dimension(120, 22));
-
         txtIdPase.setPreferredSize(new java.awt.Dimension(120, 22));
         txtIdPase.addActionListener(this::txtIdPaseActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("🧒 Socio:");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("🗓️ Fecha Fin:");
 
         btnSalir.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(102, 102, 255));
@@ -164,7 +157,7 @@ private void cargarTabla() {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("💳 Costo:");
+        jLabel4.setText("💳 Cupos:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
@@ -205,6 +198,9 @@ private void cargarTabla() {
         jButton2.setText("🔎Buscar");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        cboCupos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - 1000", "4 - 3500", "8 - 7000", "30 - 28000" }));
+        cboCupos.addActionListener(this::cboCuposActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,10 +225,8 @@ private void cargarTabla() {
                         .addComponent(jCheckBox1)
                         .addGap(0, 45, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(238, 720, Short.MAX_VALUE))))
+                        .addComponent(jLabel3)
+                        .addGap(259, 741, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,9 +237,8 @@ private void cargarTabla() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtIdPase, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCosto, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                     .addComponent(fch_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fch_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboCupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -253,7 +246,7 @@ private void cargarTabla() {
                 .addGap(35, 35, 35))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboSocio, fch_fin, fch_inicio, txtCosto, txtIdPase});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboCupos, cboSocio, fch_inicio, txtIdPase});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
@@ -273,18 +266,17 @@ private void cargarTabla() {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(cboSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cboCupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(fch_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(fch_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(fch_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -298,7 +290,7 @@ private void cargarTabla() {
                 .addGap(40, 40, 40))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboSocio, fch_fin, fch_inicio, txtCosto, txtIdPase});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboSocio, fch_inicio, txtIdPase});
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnGuardar, btnLimpiar, btnModificar, btnSalir});
 
@@ -306,24 +298,24 @@ private void cargarTabla() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    try {
-        Date fch_inicio_date = fch_inicio.getDate();
-        Date fch_fin_date = fch_fin.getDate();
-
-            if (fch_inicio_date != null && fch_fin_date != null) {
+        try {
+            Date fch_inicio_date = fch_inicio.getDate();
+            if (fch_inicio_date != null) {
                 LocalDate fecha_inicio = fch_inicio_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate fecha_fin = fch_fin_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                String costoStr = txtCosto.getText();
+                String cupos = cboCupos.getSelectedItem().toString();
+                String costoStr = cupos.split(" ")[2];
+                String cantidadStr = cupos.split(" ")[0];
 
                 float costo = Float.parseFloat(costoStr);
+                int cantidad = Integer.parseInt(cantidadStr);
 
                 int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
 
                 Pase pase = new Pase();
                 pase.setSocio(sd.buscarSocioPorId(socioId));
-                pase.setCant_entradas(1);
+                pase.setCant_entradas(cantidad);
                 pase.setFecha_inicio(fecha_inicio);
-                pase.setFecha_fin(fecha_fin);
+                pase.setFecha_fin(fecha_inicio.plusMonths(1));
                 pase.setCosto(costo);
                 pase.setEstado(true);
 
@@ -346,85 +338,88 @@ private void cargarTabla() {
     }//GEN-LAST:event_cboSocioActionPerformed
 
     private void txtIdPaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPaseActionPerformed
-    
+
     }//GEN-LAST:event_txtIdPaseActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    try {
-        String idText = txtIdPase.getText();
-        if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese o busque el ID del pase a modificar.");
-            return;
+        try {
+            String idText = txtIdPase.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese o busque el ID del pase a modificar.");
+                return;
+            }
+            Date fch_inicio_date = fch_inicio.getDate();
+
+            if (fch_inicio_date == null) {
+                JOptionPane.showMessageDialog(null, "Ingrese alguna fecha");
+                return;
+            }
+
+            LocalDate fecha_inicio = fch_inicio_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            int id = Integer.parseInt(idText);
+            int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
+            String cupos = cboCupos.getSelectedItem().toString();
+            String costoStr = cupos.split(" ")[2];
+            String cantidadStr = cupos.split(" ")[0];
+
+            float costo = Float.parseFloat(costoStr);
+            int cantidad = Integer.parseInt(cantidadStr);
+
+            Pase pase = new Pase();
+            pase.setId(id);
+            pase.setSocio(sd.buscarSocioPorId(socioId));
+            pase.setCant_entradas(cantidad);
+            pase.setFecha_inicio(fecha_inicio);
+            pase.setFecha_fin(fecha_inicio.plusMonths(1));
+            pase.setCosto(costo);
+
+            paseData.actualizarPase(pase);
+            JOptionPane.showMessageDialog(this, "¡Pase modificado con éxito!");
+            limpiarCampos();
+            cargarTabla();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Verifique que el ID y el costo sean numéricos.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar el pase: " + ex.getMessage());
         }
-        Date fch_inicio_date = fch_inicio.getDate();
-        Date fch_fin_date = fch_fin.getDate();
-        
-        if (fch_inicio_date == null || fch_fin_date == null) {
-            JOptionPane.showMessageDialog(null, "Ingrese alguna fecha");
-            return;
-        }
-        
-        LocalDate fecha_inicio = fch_inicio_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fecha_fin = fch_fin_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        int id = Integer.parseInt(idText);
-        float costo = Float.parseFloat(txtCosto.getText());
-        int socioId = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
-        
-        Pase pase = new Pase();
-        pase.setId(id);
-        pase.setSocio(sd.buscarSocioPorId(socioId));
-        pase.setCant_entradas(1);
-        pase.setFecha_inicio(fecha_inicio);
-        pase.setFecha_fin(fecha_fin);
-        pase.setCosto(costo);
-
-        paseData.actualizarPase(pase);
-        JOptionPane.showMessageDialog(this, "¡Pase modificado con éxito!");
-        limpiarCampos();
-        cargarTabla();
-
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Verifique que el ID y el costo sean numéricos.");
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al modificar el pase: " + ex.getMessage());
-    }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    try {
-        String idText = txtIdPase.getText();
-        if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del pase a eliminar.");
-            return;
+        try {
+            String idText = txtIdPase.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese el ID del pase a eliminar.");
+                return;
+            }
+
+            int id = Integer.parseInt(idText);
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro que desea eliminar el pase con ID " + id + "?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                paseData.borrarPase(id);
+                JOptionPane.showMessageDialog(this, "Pase eliminado con éxito.");
+                limpiarCampos();
+                cargarTabla();
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el pase: " + ex.getMessage());
         }
-
-        int id = Integer.parseInt(idText);
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-                "¿Está seguro que desea eliminar el pase con ID " + id + "?", 
-                "Confirmar eliminación", 
-                JOptionPane.YES_NO_OPTION);
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            paseData.borrarPase(id);
-            JOptionPane.showMessageDialog(this, "Pase eliminado con éxito.");
-            limpiarCampos();
-            cargarTabla();
-        }
-
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar el pase: " + ex.getMessage());
-    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    limpiarCampos();
+        limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-    dispose();
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -438,20 +433,37 @@ private void cargarTabla() {
 
             if (paseActual != null) {
                 cboSocio.setSelectedItem(paseActual.getSocio());
-                txtCosto.setText(String.valueOf(paseActual.getCosto()));
+                int comboIndex = -1;
+                switch (paseActual.getCosto()) {
+                    case 1000.0f:
+                        comboIndex = 0;
+                        break;
+                    case 3500.0f:
+                        comboIndex = 1;
+                        break;
+                    case 7000.0f:
+                        comboIndex = 2;
+                        break;
+                    case 28000.0f:
+                        comboIndex = 3;
+                        break;
+                    default:
+                        System.out.println("Precio no registrado");
+                }
+                cboCupos.setSelectedIndex(comboIndex);
                 Date fch_inicio_date = Date.from(
                         paseActual.getFecha_inicio().atStartOfDay(ZoneId.systemDefault()).toInstant()
                 );
-                Date fch_fin_date = Date.from(
-                        paseActual.getFecha_fin().atStartOfDay(ZoneId.systemDefault()).toInstant()
-                );
                 fch_inicio.setDate(fch_inicio_date);
-                fch_fin.setDate(fch_fin_date);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido para buscar.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cboCuposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCuposActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboCuposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,8 +496,8 @@ private void cargarTabla() {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cboCupos;
     private javax.swing.JComboBox<String> cboSocio;
-    private com.toedter.calendar.JDateChooser fch_fin;
     private com.toedter.calendar.JDateChooser fch_inicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -495,10 +507,8 @@ private void cargarTabla() {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePases;
-    private javax.swing.JTextField txtCosto;
     private javax.swing.JTextField txtIdPase;
     // End of variables declaration//GEN-END:variables
 }
