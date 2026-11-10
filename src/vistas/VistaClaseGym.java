@@ -111,6 +111,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tClasesGym = new javax.swing.JTable();
         chk_desabilitados = new javax.swing.JCheckBox();
+        btnRestaurar3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -183,6 +184,11 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         chk_desabilitados.setText("Desabilitados");
         chk_desabilitados.addActionListener(this::chk_desabilitadosActionPerformed);
 
+        btnRestaurar3.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        btnRestaurar3.setForeground(new java.awt.Color(102, 102, 255));
+        btnRestaurar3.setText(" 🔁 Restaurar");
+        btnRestaurar3.addActionListener(this::btnRestaurar3ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,46 +199,49 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cboEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addGap(22, 22, 22)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtIdClase, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                            .addComponent(txtDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(67, 67, 67)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnModificar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar)
+                                .addComponent(btnEliminar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtIdClase, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                    .addComponent(txtDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnRestaurar3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnLimpiar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSalir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(chk_desabilitados)))
-                        .addGap(0, 48, Short.MAX_VALUE))))
+                                .addGap(53, 53, 53)
+                                .addComponent(chk_desabilitados)
+                                .addGap(0, 48, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cboEntrenador, txtCapacidad, txtDisciplina, txtHorario, txtIdClase});
@@ -273,9 +282,10 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
                     .addComponent(btnGuardar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar)
                     .addComponent(btnSalir)
-                    .addComponent(chk_desabilitados))
+                    .addComponent(chk_desabilitados)
+                    .addComponent(btnRestaurar3)
+                    .addComponent(btnLimpiar))
                 .addGap(31, 31, 31))
         );
 
@@ -420,6 +430,27 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         cargarClasesGym();
     }//GEN-LAST:event_chk_desabilitadosActionPerformed
 
+    private void btnRestaurar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurar3ActionPerformed
+        try {
+            String idText = txtIdClase.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese el ID de la clase a retaurar.");
+                return;
+            }
+
+            int id = Integer.parseInt(idText);
+
+            cd.darDeAltaClase(cd.buscarClase(id));
+            btnLimpiarActionPerformed(evt);
+            cargarClasesGym();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al reataurar la clase: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnRestaurar3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -450,6 +481,10 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRestaurar;
+    private javax.swing.JButton btnRestaurar1;
+    private javax.swing.JButton btnRestaurar2;
+    private javax.swing.JButton btnRestaurar3;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboEntrenador;
     private javax.swing.JCheckBox chk_desabilitados;
