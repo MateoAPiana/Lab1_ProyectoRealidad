@@ -147,7 +147,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu3MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-
+reiniciarEstilosMenus();
+jMenu3.setText("<html><b style='color:red;'>Clases</b></html>");
         VistaClaseGym vm = new VistaClaseGym();
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
         int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
@@ -166,7 +167,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         mainPanel.removeAll();
         mainPanel.repaint();
-
+reiniciarEstilosMenus();
+jMenu2.setText("<html><b style='color:red;'>Entrenadores</b></html>");
         VistaEntrenador ve = new VistaEntrenador();
         int x = (mainPanel.getWidth() - ve.getWidth()) / 2;
         int y = (mainPanel.getHeight() - ve.getHeight()) / 2;
@@ -179,7 +181,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu1MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-
+reiniciarEstilosMenus();
+        jMenu1.setText("<html><b style='color:red;'>Socios</b></html>");
         VistaSocio vm = new VistaSocio();
 
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
@@ -194,7 +197,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu4MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-
+reiniciarEstilosMenus();
+jMenu4.setText("<html><b style='color:red;'>Pases</b></html>");
         VistaPase vp = new VistaPase();
         // vp.setSize(860, 300);
 
@@ -211,7 +215,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu5MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-
+reiniciarEstilosMenus();
+jMenu5.setText("<html><b style='color:red;'>Asistencias</b></html>");
         VistaAsistencia vm = new VistaAsistencia();
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
         int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
@@ -278,5 +283,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
 
 
-
+public void reiniciarEstilosMenus() {
+        jMenu1.setText("Socios");
+        jMenu2.setText("Entrenadores");
+        jMenu3.setText("Clases");
+        jMenu4.setText("Pases");
+        jMenu5.setText("Asistencias");
+    }
 }

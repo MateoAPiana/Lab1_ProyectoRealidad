@@ -454,8 +454,16 @@ private boolean validarCamposEntrenador() {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        dispose();
+
+for (java.awt.Window window : java.awt.Window.getWindows()) {
+        if (window instanceof MenuPrincipal) {
+            MenuPrincipal m = (MenuPrincipal) window;
+            m.mainPanel.removeAll();
+            m.mainPanel.repaint();
+            m.reiniciarEstilosMenus(); // Método que limpia los textos rojos
+            break;
+        }
+    }        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

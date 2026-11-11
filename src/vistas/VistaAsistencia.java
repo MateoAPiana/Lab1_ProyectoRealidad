@@ -319,6 +319,15 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+for (java.awt.Window window : java.awt.Window.getWindows()) {
+        if (window instanceof MenuPrincipal) {
+            MenuPrincipal m = (MenuPrincipal) window;
+            m.mainPanel.removeAll();
+            m.mainPanel.repaint();
+            m.reiniciarEstilosMenus(); // Método que limpia los textos rojos
+            break;
+        }
+    }
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
