@@ -153,4 +153,23 @@ public class EntrenadorData {
         }
         return list_entrenador;
     }
+    
+    public boolean tieneClasesPendientes(int id){
+        String sql = "SELECT COUNT(*) FROM Entrenador e, clasegym c WHERE e.id_entrenador = c.id_entrenador AND e.id_entrenador = ? AND c.estado = 1;";
+        boolean res = true;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt(1) > 0;
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un entrenador con ese ID.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el entrenador: " + ex.getMessage());
+        }
+        return res;
+    }
 }

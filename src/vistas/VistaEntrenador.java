@@ -428,6 +428,12 @@ private boolean validarCamposEntrenador() {
 
         int id = Integer.parseInt(idText);
 
+        boolean tieneClasesPendientes = entData.tieneClasesPendientes(id);
+        
+        if(tieneClasesPendientes) {
+            JOptionPane.showMessageDialog(this, "Este entrenador tiene clases pendientes");
+            return;
+        }
        
         int confirmacion = JOptionPane.showConfirmDialog(this, 
                 "¿Está seguro que desea eliminar al entrenador con ID " + id + "?", 
