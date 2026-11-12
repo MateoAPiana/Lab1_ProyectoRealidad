@@ -141,13 +141,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTablaSocio.setToolTipText("");
         jScrollPane1.setViewportView(jTablaSocio);
         if (jTablaSocio.getColumnModel().getColumnCount() > 0) {
             jTablaSocio.getColumnModel().getColumn(0).setResizable(false);

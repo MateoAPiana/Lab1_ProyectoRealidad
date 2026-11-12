@@ -44,6 +44,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
         modelo.addColumn("ID Pase");
         modelo.addColumn("Socio");
         modelo.addColumn("Costo");
+        modelo.addColumn("Cupos");
         modelo.addColumn("Fecha Inicio");
         modelo.addColumn("Fecha Fin");
         modelo.addColumn("Estado");
@@ -63,6 +64,7 @@ public class VistaPase extends javax.swing.JInternalFrame {
                     p.getId(),
                     p.getSocio() != null ? p.getSocio().getNombre() + " " + p.getSocio().getApellido() : "Sin Socio",
                     p.getCosto(),
+                    p.getCant_entradas(),
                     p.getFecha_inicio(),
                     p.getFecha_fin(),
                     p.isEstado() ? "Activo" : "Inactivo"
