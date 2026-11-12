@@ -51,6 +51,7 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         modelo.addColumn("Entrenador");
         modelo.addColumn("Horario");
         modelo.addColumn("Capacidad");
+        modelo.addColumn("asistencias");
         modelo.addColumn("Estado");
 
    
@@ -61,14 +62,16 @@ public class VistaClaseGym extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
         
         List<ClaseGym> clases = cd.listarClases(mostarDesabilitados);
-        
-        for(ClaseGym c : clases){
+          
+        for (ClaseGym c : clases) {
+            int cant = cd.cantidadAsistenciasPorClase(c.getId());
             modelo.addRow(new Object[]{
                 c.getId(),
                 c.getDiciplina(),
                 c.getEntrenador().getNombre() + " " + c.getEntrenador().getApellido(),
                 c.getHorario(),
                 c.getCapacidad(),
+                cant,
                 c.isEstado()
             });
         }

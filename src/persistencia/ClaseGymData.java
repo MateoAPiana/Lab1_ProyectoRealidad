@@ -152,7 +152,27 @@ public class ClaseGymData {
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al borrar la clase: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al consultar la clase: " + ex.getMessage());
+        }
+        
+        return res;
+    }
+    
+    public int cantidadAsistenciasPorClase(int id){
+        String sql = "SELECT count(id_socio) FROM Asistencia a, ClaseGym c WHERE a.id_clase = ? AND a.id_clase = c.id_clase GROUP BY a.id_clase";
+        int res = 0;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                res = rs.getInt(1);
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al consultar la clase: " + ex.getMessage());
         }
         
         return res;

@@ -271,7 +271,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         int id_socio = Integer.parseInt(cboSocio.getSelectedItem().toString().split(" ")[0]);
         Socio socio = sd.buscarSocioPorId(id_socio);
-        
+                
         int id_clase = Integer.parseInt(cboClase.getSelectedItem().toString().split(" ")[0]);
         ClaseGym claseGym = cd.buscarClase(id_clase);
      
@@ -281,6 +281,11 @@ public class VistaAsistencia extends javax.swing.JInternalFrame{
             LocalDate fecha = date_fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             Pase pase = pd.buscarPasePorSocio(id_socio);
+            
+            if(pase == null){
+                JOptionPane.showMessageDialog(null, "El socio no posee un pase válido");
+                return;
+            }
 
             if ((fecha.isAfter(pase.getFecha_inicio()) && fecha.isBefore(pase.getFecha_fin()) || fecha.isEqual(pase.getFecha_inicio()) || fecha.isEqual(pase.getFecha_fin()) )) {
                 Asistencia asistencia = new Asistencia(socio, claseGym, fecha);
