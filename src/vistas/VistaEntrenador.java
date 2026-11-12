@@ -552,34 +552,34 @@ for (java.awt.Window window : java.awt.Window.getWindows()) {
         java.awt.EventQueue.invokeLater(() -> new VistaEntrenador().setVisible(true));
     }
     private DefaultTableModel tabla = new DefaultTableModel();
-    
+
     private void armarTabla() {
-    tabla.addColumn("ID");
-    tabla.addColumn("DNI");
-    tabla.addColumn("Nombre");
-    tabla.addColumn("Apellido");
-    tabla.addColumn("Especialidad");
-    tabla.addColumn("Estado");
-    jTable1.setModel(tabla); 
-}
-    
+        tabla.addColumn("ID");
+        tabla.addColumn("DNI");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Apellido");
+        tabla.addColumn("Especialidad");
+        tabla.addColumn("Estado");
+        jTable1.setModel(tabla);
+    }
+
     private void cargarTabla() {
-    tabla.setRowCount(0);
-    EntrenadorData entData = new EntrenadorData();
-    List<Entrenador> lista = entData.listarEntrenador(tab);
-    
-for (Entrenador ent : lista) {
-        
-        Object[] fila = new Object[6];
-    
-    fila[0] = ent.getIdEntrenador();
-    fila[1] = ent.getDni();
-    fila[2] = ent.getNombre();
-    fila[3] = ent.getApellido();
-    fila[4] = ent.getEspecialidad();
-    fila[5] = ent.isEstado()? "Activo" : "Inactivo";
-    tabla.addRow(fila);}
-}
+        tabla.setRowCount(0);
+        List<Entrenador> lista = entData.listarEntrenador(tab);
+
+        for (Entrenador ent : lista) {
+
+            Object[] fila = new Object[6];
+
+            fila[0] = ent.getIdEntrenador();
+            fila[1] = ent.getDni();
+            fila[2] = ent.getNombre();
+            fila[3] = ent.getApellido();
+            fila[4] = ent.getEspecialidad();
+            fila[5] = ent.isEstado() ? "Activo" : "Inactivo";
+            tabla.addRow(fila);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

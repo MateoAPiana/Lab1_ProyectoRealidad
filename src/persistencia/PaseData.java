@@ -43,6 +43,7 @@ public class PaseData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pase: " + ex.getMessage());
         }
     }
+    
     public List<Pase> listarPases(boolean mostrarDeshabilitados) {
         List<Pase> pases = new ArrayList<>();
         String sql = "SELECT id_pase, id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE estado = 1"; // O ajustalo según tu tabla
@@ -79,7 +80,41 @@ public class PaseData {
         }
     
         return pases;
-}
+    }
+    
+    public List<Pase> listarPasesPorSocio(int id) {
+        List<Pase> pases = new ArrayList<>();
+        String sql = "SELECT id_pase, pase.id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, pase.estado FROM pase, socio WHERE pase.id_socio = socio.id_socio AND pase.id_socio = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+        
+            while (rs.next()) {
+                Pase pase = new Pase();
+                pase.setId(rs.getInt("id_pase"));
+            
+                SocioData sd = new SocioData();
+                pase.setSocio(sd.buscarSocioPorId(rs.getInt("id_socio")));
+            
+                pase.setCant_entradas(rs.getInt("cantidad_entradas"));
+                pase.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
+                pase.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
+                pase.setCosto(rs.getFloat("costo"));
+                pase.setEstado(rs.getBoolean("estado"));
+            
+                pases.add(pase);
+            }
+            ps.close();
+        
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al listar los pases: " + ex.getMessage());
+        }
+    
+        return pases;
+    }
+    
     public Pase buscarPase(int id) {
         String sql = "SELECT id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE id_pase = ? AND Estado = 1";
         Pase pase = null;

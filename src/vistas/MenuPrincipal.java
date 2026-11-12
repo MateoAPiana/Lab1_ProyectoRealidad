@@ -15,8 +15,7 @@ import javax.swing.JPanel;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    
-    FondoPanel fondo= new FondoPanel();
+    FondoPanel fondo = new FondoPanel();
     private static final java.util.logging.Logger logger = java.util.logging.Logger
             .getLogger(MenuPrincipal.class.getName());
 
@@ -52,6 +51,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +117,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("Socio - Pase");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
+        jMenu6.addActionListener(this::jMenu6ActionPerformed);
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,6 +148,24 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu3MenuSelected
 
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        reiniciarEstilosMenus();
+        jMenu6.setText("<html><b style='color:red;'>Clases</b></html>");
+        VistaSocioPase vm = new VistaSocioPase();
+        int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
+        int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
+        vm.setLocation(x, y);
+
+        mainPanel.add(vm);
+        vm.setVisible(true);
+    }//GEN-LAST:event_jMenu6MouseClicked
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu3ActionPerformed
 
         // mainPanel.moveToFront(vm);
@@ -147,8 +174,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu3MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-reiniciarEstilosMenus();
-jMenu3.setText("<html><b style='color:red;'>Clases</b></html>");
+        reiniciarEstilosMenus();
+        jMenu3.setText("<html><b style='color:red;'>Clases</b></html>");
         VistaClaseGym vm = new VistaClaseGym();
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
         int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
@@ -167,8 +194,8 @@ jMenu3.setText("<html><b style='color:red;'>Clases</b></html>");
         // TODO add your handling code here:
         mainPanel.removeAll();
         mainPanel.repaint();
-reiniciarEstilosMenus();
-jMenu2.setText("<html><b style='color:red;'>Entrenadores</b></html>");
+        reiniciarEstilosMenus();
+        jMenu2.setText("<html><b style='color:red;'>Entrenadores</b></html>");
         VistaEntrenador ve = new VistaEntrenador();
         int x = (mainPanel.getWidth() - ve.getWidth()) / 2;
         int y = (mainPanel.getHeight() - ve.getHeight()) / 2;
@@ -181,7 +208,7 @@ jMenu2.setText("<html><b style='color:red;'>Entrenadores</b></html>");
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu1MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-reiniciarEstilosMenus();
+        reiniciarEstilosMenus();
         jMenu1.setText("<html><b style='color:red;'>Socios</b></html>");
         VistaSocio vm = new VistaSocio();
 
@@ -197,8 +224,8 @@ reiniciarEstilosMenus();
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu4MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-reiniciarEstilosMenus();
-jMenu4.setText("<html><b style='color:red;'>Pases</b></html>");
+        reiniciarEstilosMenus();
+        jMenu4.setText("<html><b style='color:red;'>Pases</b></html>");
         VistaPase vp = new VistaPase();
         // vp.setSize(860, 300);
 
@@ -215,8 +242,8 @@ jMenu4.setText("<html><b style='color:red;'>Pases</b></html>");
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jMenu5MouseClicked
         mainPanel.removeAll();
         mainPanel.repaint();
-reiniciarEstilosMenus();
-jMenu5.setText("<html><b style='color:red;'>Asistencias</b></html>");
+        reiniciarEstilosMenus();
+        jMenu5.setText("<html><b style='color:red;'>Asistencias</b></html>");
         VistaAsistencia vm = new VistaAsistencia();
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
         int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
@@ -261,6 +288,7 @@ jMenu5.setText("<html><b style='color:red;'>Asistencias</b></html>");
     public javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     public javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
@@ -281,9 +309,7 @@ jMenu5.setText("<html><b style='color:red;'>Asistencias</b></html>");
         }
     }
 
-
-
-public void reiniciarEstilosMenus() {
+    public void reiniciarEstilosMenus() {
         jMenu1.setText("Socios");
         jMenu2.setText("Entrenadores");
         jMenu3.setText("Clases");
