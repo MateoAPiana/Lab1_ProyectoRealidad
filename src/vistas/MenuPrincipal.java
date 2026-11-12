@@ -52,6 +52,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +127,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu6.addActionListener(this::jMenu6ActionPerformed);
         jMenuBar1.add(jMenu6);
 
+        jMenu7.setText("Clase - Asistencia");
+        jMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu7MouseClicked(evt);
+            }
+        });
+        jMenu7.addActionListener(this::jMenu7ActionPerformed);
+        jMenuBar1.add(jMenu7);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,7 +162,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mainPanel.removeAll();
         mainPanel.repaint();
         reiniciarEstilosMenus();
-        jMenu6.setText("<html><b style='color:red;'>Clases</b></html>");
+        jMenu6.setText("<html><b style='color:red;'>Socio - Pase</b></html>");
         VistaSocioPase vm = new VistaSocioPase();
         int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
         int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
@@ -165,6 +175,24 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu7MouseClicked
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        reiniciarEstilosMenus();
+        jMenu7.setText("<html><b style='color:red;'>Clase - Asistencia</b></html>");
+        VistaClaseAsistencia vm = new VistaClaseAsistencia();
+        int x = (mainPanel.getWidth() - vm.getWidth()) / 2;
+        int y = (mainPanel.getHeight() - vm.getHeight()) / 2;
+        vm.setLocation(x, y);
+
+        mainPanel.add(vm);
+        vm.setVisible(true);
+    }//GEN-LAST:event_jMenu7MouseClicked
+
+    private void jMenu7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu7ActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu3ActionPerformed
 
@@ -289,6 +317,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     public javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
@@ -315,5 +344,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Clases");
         jMenu4.setText("Pases");
         jMenu5.setText("Asistencias");
+        jMenu6.setText("Socio - Pase");
+        jMenu7.setText("Clase - Asistencia");
     }
 }
