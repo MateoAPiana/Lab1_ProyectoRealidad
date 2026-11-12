@@ -522,6 +522,12 @@ private boolean validarCamposSocio() {
         JOptionPane.showMessageDialog(this, "El nombre y el apellido solo deben contener letras.", "Error de formato", JOptionPane.ERROR_MESSAGE);
         return false;
     }
+    //
+    String correoRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+    if (!txtCorreo.getText().trim().matches(correoRegex)) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa un correo electrónico válido (ejemplo: usuario@dominio.com).", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
 
     return true;
 }
