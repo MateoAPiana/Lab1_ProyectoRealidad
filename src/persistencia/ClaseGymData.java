@@ -114,7 +114,7 @@ public class ClaseGymData {
     }
 
     public void borrarClase(int id) {
-        String sql = "DELETE FROM clasegym WHERE id = ?";
+        String sql = "DELETE FROM clasegym WHERE id_clase = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
@@ -146,8 +146,7 @@ public class ClaseGymData {
                     res = false;
                 }else res = true;
             } else {
-                res = true;
-                JOptionPane.showMessageDialog(null, "No existe una clase con ese ID.");
+                res = false;
             }
             ps.close();
             

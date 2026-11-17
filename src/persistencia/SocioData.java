@@ -91,7 +91,7 @@ public class SocioData {
         }
         return socio_lista;
     }
-public List<Socio> listarSocios(boolean mostrarDesabilitados) {
+    public List<Socio> listarSocios(boolean mostrarDesabilitados) {
         String sql = "SELECT id_socio, dni, nombre, apellido, edad, correo, telefono, estado FROM socio WHERE estado = 1";
         
         if (mostrarDesabilitados) {
@@ -231,23 +231,23 @@ public List<Socio> listarSocios(boolean mostrarDesabilitados) {
 
         return socio;
     }
-    
-public void eliminarSocioPorDni(String dni) {
-    String sql = "UPDATE Socio SET estado = 0 WHERE dni = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, dni);
-        
-        int exito = ps.executeUpdate();
-        if (exito == 1) {
-            JOptionPane.showMessageDialog(null, "Socio dado de baja correctamente por DNI");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró ningún socio con ese DNI.");
+
+    public void eliminarSocioPorDni(String dni) {
+        String sql = "UPDATE Socio SET estado = 0 WHERE dni = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, dni);
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Socio dado de baja correctamente por DNI");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún socio con ese DNI.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el socio: " + ex.getMessage());
         }
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al eliminar el socio: " + ex.getMessage());
     }
-}    
-    
+
 }

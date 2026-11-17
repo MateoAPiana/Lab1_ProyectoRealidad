@@ -116,7 +116,7 @@ public class PaseData {
     }
     
     public Pase buscarPase(int id) {
-        String sql = "SELECT id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE id_pase = ? AND Estado = 1";
+        String sql = "SELECT id_socio, cantidad_entradas, fecha_inicio, fecha_fin, costo, estado FROM pase WHERE id_pase = ?";
         Pase pase = null;
         SocioData sd = new SocioData();
         try {

@@ -112,7 +112,7 @@ public class EntrenadorData {
     }
 
     public void eliminarEntrenador(int id) {
-        String sql = "UPDATE Entrenador SET Estado = 0 WHERE ID_Entrenador = ?";
+        String sql = "DELETE FROM entrenador WHERE ID_Entrenador = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
