@@ -321,7 +321,7 @@ private boolean validarCamposEntrenador() {
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (!validarCamposEntrenador()) {
+        {        if (!validarCamposEntrenador()) {
         return;
         }
 
